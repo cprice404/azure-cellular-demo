@@ -59,11 +59,20 @@ namespace MyCompany.MyApp {
                 Value = "BAAAAAAAAAAR!"
             });
             
+            var pipelineCiTriggerOverride = new azuredevops.BuildDefinition.BuildDefinitionCiTriggerOverride();
+            pipelineCiTriggerOverride.BranchFilter =
+                new List<azuredevops.BuildDefinition.BuildDefinitionCiTriggerOverrideBranchFilter>().ToArray();
+            
+            var pipelineCiTrigger = new azuredevops.BuildDefinition.BuildDefinitionCiTrigger();
+            pipelineCiTrigger.Override = pipelineCiTriggerOverride; 
+                
+            
             var pipelineConfig = new azuredevops.BuildDefinition.BuildDefinitionConfig();
             pipelineConfig.Name = "myFirstPipeline";
             pipelineConfig.Repository = pipelineRepository;
             pipelineConfig.ProjectId = project.Id;
             pipelineConfig.Variable = pipelineVariables.ToArray();
+            pipelineConfig.CiTrigger = pipelineCiTrigger;
             var pipelineDefinition =
                 new azuredevops.BuildDefinition.BuildDefinition(this, "myFirstPipeline", pipelineConfig);
         }

@@ -17,15 +17,18 @@ namespace MyCompany.MyApp
                     .AddJsonFile("appsettings.json", false)
                     .Build();
 
-            String personalAccessToken = getConfig(config, "PersonalAccessToken");
+            
             String azureDevopsOrganizationUrl = getConfig(config, "AzureDevopsOrganizationUrl");
+            String azurePersonalAccessToken = getConfig(config, "AzureDevopsPersonalAccessToken");
+            String githubPersonalAccessToken = getConfig(config, "GithubPersonalAccessToken");
             
             
             App app = new App();
             new MainStack(app, "cdktf-azure-devops-experiment", new MainStackOptions()
             {
-                personalAccessToken = personalAccessToken,
-                azureDevopsOrganizationUrl = azureDevopsOrganizationUrl
+                azureDevopsOrganizationUrl = azureDevopsOrganizationUrl,
+                azureDevopsPersonalAccessToken = azurePersonalAccessToken,
+                githubPersonalAccessToken = githubPersonalAccessToken,
             });
             app.Synth();
             Console.WriteLine("App synth complete");

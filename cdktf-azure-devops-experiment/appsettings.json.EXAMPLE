@@ -1,4 +1,5 @@
 {
-  "PersonalAccessToken": "<insert your Azure Devops personal access token here>",
   "AzureDevopsOrganizationUrl": "https://dev.azure.com/<insert your Azure Devops org name here>"
+  "AzureDevopsPersonalAccessToken": "<insert your Azure Devops personal access token here>",
+  "GithubPersonalAccessToken": "<insert your GitHub personal access token here>"
 }

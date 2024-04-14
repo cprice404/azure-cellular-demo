@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Constructs;
 using HashiCorp.Cdktf;
 
@@ -45,11 +46,24 @@ namespace MyCompany.MyApp {
             pipelineRepository.YmlPath = "cdktf-azure-devops-experiment/cdktf-azure-pipeline.yml";
             pipelineRepository.ServiceConnectionId = githubServiceEndpoint.Id;
             pipelineRepository.BranchName = "refs/heads/main";
+
+            var pipelineVariables = new List<azuredevops.BuildDefinition.BuildDefinitionVariable>();
+            pipelineVariables.Add(new azuredevops.BuildDefinition.BuildDefinitionVariable()
+            {
+                Name = "foo",
+                Value = "FOOOOOOOOO!"
+            });
+            pipelineVariables.Add(new azuredevops.BuildDefinition.BuildDefinitionVariable()
+            {
+                Name = "bar",
+                Value = "BAAAAAAAAAAR!"
+            });
             
             var pipelineConfig = new azuredevops.BuildDefinition.BuildDefinitionConfig();
             pipelineConfig.Name = "myFirstPipeline";
             pipelineConfig.Repository = pipelineRepository;
             pipelineConfig.ProjectId = project.Id;
+            pipelineConfig.Variable = pipelineVariables.ToArray();
             var pipelineDefinition =
                 new azuredevops.BuildDefinition.BuildDefinition(this, "myFirstPipeline", pipelineConfig);
         }

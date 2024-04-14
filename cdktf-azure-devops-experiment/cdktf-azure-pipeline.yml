@@ -25,10 +25,22 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          # Write your commands here
-
           echo 'Hello world'
           ls -l
+          echo "foo is: $(foo)"
+          echo "bar is: $(bar)"
+           
+    - task: Bash@3
+      name: 'just echoing'
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo 'STILL HERE'
+          
+    - task: Bash@3
+      name: 'install-software'
+      inputs:
+        filePath: 'cdktf-azure-devops-experiment/pipeline-scripts/install-software.sh'
     
     - upload: manifests
       artifact: manifests

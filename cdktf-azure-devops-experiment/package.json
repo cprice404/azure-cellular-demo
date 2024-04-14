@@ -1,5 +1,8 @@
 {
+  "scripts": {
+    "synth": "cdktf synth"
+  },
   "dependencies": {
-    "cdktf-cli": "^0.20.6"
+    "cdktf-cli": "0.20.6"
   }
 }

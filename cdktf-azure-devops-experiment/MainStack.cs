@@ -1,6 +1,6 @@
-using System;
 using Constructs;
 using HashiCorp.Cdktf;
+using azuredevops.Project;
 
 
 namespace MyCompany.MyApp
@@ -9,7 +9,9 @@ namespace MyCompany.MyApp
     {
         public MainStack(Construct scope, string id) : base(scope, id)
         {
-            // define resources here
+            var projectConfig = new ProjectConfig();
+            projectConfig.Name = "myCdkTfProject";
+            var project = new Project(scope, "myproject", projectConfig);
         }
     }
 }

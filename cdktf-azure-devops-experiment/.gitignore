@@ -2,3 +2,4 @@
 bin/
 cdktf.out/
 obj/
+node_modules/

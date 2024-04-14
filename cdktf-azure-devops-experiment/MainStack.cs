@@ -50,12 +50,12 @@ namespace MyCompany.MyApp {
             var pipelineVariables = new List<azuredevops.BuildDefinition.BuildDefinitionVariable>();
             pipelineVariables.Add(new azuredevops.BuildDefinition.BuildDefinitionVariable()
             {
-                Name = "foo",
+                Name = "FOO",
                 Value = "FOOOOOOOOO!"
             });
             pipelineVariables.Add(new azuredevops.BuildDefinition.BuildDefinitionVariable()
             {
-                Name = "bar",
+                Name = "BAR",
                 Value = "BAAAAAAAAAAR!"
             });
             

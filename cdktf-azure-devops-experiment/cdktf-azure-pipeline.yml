@@ -27,8 +27,8 @@ stages:
         script: |
           echo 'Hello world'
           ls -l
-          echo "foo is: $(foo)"
-          echo "bar is: $(bar)"
+          echo "foo is: $(FOO)"
+          echo "bar is: $(BAR)"
            
     - task: Bash@3
       name: 'just_echoing'

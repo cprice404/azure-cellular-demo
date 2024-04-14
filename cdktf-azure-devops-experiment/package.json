@@ -1,6 +1,9 @@
 {
   "scripts": {
-    "synth": "cdktf synth"
+    "synth": "cdktf synth",
+    "diff": "cdktf diff",
+    "deploy": "cdktf deploy",
+    "destroy": "cdktf destroy"
   },
   "dependencies": {
     "cdktf-cli": "0.20.6"

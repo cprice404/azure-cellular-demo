@@ -1,0 +1,4 @@
+{
+  "PersonalAccessToken": "<insert your Azure Devops personal access token here>",
+  "AzureDevopsOrganizationUrl": "https://dev.azure.com/<insert your Azure Devops org name here>"
+}

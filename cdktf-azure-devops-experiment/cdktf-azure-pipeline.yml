@@ -31,14 +31,14 @@ stages:
           echo "bar is: $(bar)"
            
     - task: Bash@3
-      name: 'just echoing'
+      name: 'just_echoing'
       inputs:
         targetType: 'inline'
         script: |
           echo 'STILL HERE'
           
     - task: Bash@3
-      name: 'install-software'
+      name: 'install_software'
       inputs:
         filePath: 'cdktf-azure-devops-experiment/pipeline-scripts/install-software.sh'
     

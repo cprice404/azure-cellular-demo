@@ -42,7 +42,7 @@ namespace MyCompany.MyApp {
             var pipelineRepository = new azuredevops.BuildDefinition.BuildDefinitionRepository();
             pipelineRepository.RepoId = "cprice404/azure-cellular-demo";
             pipelineRepository.RepoType = "GitHub";
-            pipelineRepository.YmlPath = "cdktf-azure/devops-experiment/cdktf-azure-pipeline.yml";
+            pipelineRepository.YmlPath = "cdktf-azure-devops-experiment/cdktf-azure-pipeline.yml";
             pipelineRepository.ServiceConnectionId = githubServiceEndpoint.Id;
             pipelineRepository.BranchName = "main";
             

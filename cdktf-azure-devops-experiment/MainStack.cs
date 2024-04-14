@@ -44,7 +44,7 @@ namespace MyCompany.MyApp {
             pipelineRepository.RepoType = "GitHub";
             pipelineRepository.YmlPath = "cdktf-azure-devops-experiment/cdktf-azure-pipeline.yml";
             pipelineRepository.ServiceConnectionId = githubServiceEndpoint.Id;
-            pipelineRepository.BranchName = "main";
+            pipelineRepository.BranchName = "refs/heads/main";
             
             var pipelineConfig = new azuredevops.BuildDefinition.BuildDefinitionConfig();
             pipelineConfig.Name = "myFirstPipeline";

@@ -59,12 +59,21 @@ namespace MyCompany.MyApp {
                 Value = "BAAAAAAAAAAR!"
             });
             
-            var pipelineCiTriggerOverride = new azuredevops.BuildDefinition.BuildDefinitionCiTriggerOverride();
-            pipelineCiTriggerOverride.BranchFilter =
-                new List<azuredevops.BuildDefinition.BuildDefinitionCiTriggerOverrideBranchFilter>().ToArray();
+            // var pipelineCiTriggerOverride = new azuredevops.BuildDefinition.BuildDefinitionCiTriggerOverride();
+            // pipelineCiTriggerOverride.BranchFilter =
+            //     new List<azuredevops.BuildDefinition.BuildDefinitionCiTriggerOverrideBranchFilter>().ToArray();
             
             var pipelineCiTrigger = new azuredevops.BuildDefinition.BuildDefinitionCiTrigger();
-            pipelineCiTrigger.Override = pipelineCiTriggerOverride; 
+            pipelineCiTrigger.UseYaml = true;
+            // pipelineCiTrigger.Override = pipelineCiTriggerOverride; 
+
+            // var pipelinePullRequestTriggerForks =
+            //     new azuredevops.BuildDefinition.BuildDefinitionPullRequestTriggerForks();
+            // pipelinePullRequestTriggerForks.Enabled = false;
+            // pipelinePullRequestTriggerForks.ShareSecrets = false;
+            //
+            // var pipelinePullRequestTrigger = new azuredevops.BuildDefinition.BuildDefinitionPullRequestTrigger();
+            // pipelinePullRequestTrigger.Forks = pipelinePullRequestTriggerForks;
                 
             
             var pipelineConfig = new azuredevops.BuildDefinition.BuildDefinitionConfig();
@@ -73,6 +82,7 @@ namespace MyCompany.MyApp {
             pipelineConfig.ProjectId = project.Id;
             pipelineConfig.Variable = pipelineVariables.ToArray();
             pipelineConfig.CiTrigger = pipelineCiTrigger;
+            // pipelineConfig.PullRequestTrigger = pipelinePullRequestTrigger;
             var pipelineDefinition =
                 new azuredevops.BuildDefinition.BuildDefinition(this, "myFirstPipeline", pipelineConfig);
         }

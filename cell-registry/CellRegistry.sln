@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CellRegistry", "CellRegistry\CellRegistry.csproj", "{F5388C37-0E92-49E8-AE75-DF71711BC4B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CellRegistryTest", "CellRegistryTest\CellRegistryTest.csproj", "{21E4AB99-E514-4090-8F7D-C8A32B1ACF4E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F5388C37-0E92-49E8-AE75-DF71711BC4B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5388C37-0E92-49E8-AE75-DF71711BC4B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5388C37-0E92-49E8-AE75-DF71711BC4B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5388C37-0E92-49E8-AE75-DF71711BC4B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21E4AB99-E514-4090-8F7D-C8A32B1ACF4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21E4AB99-E514-4090-8F7D-C8A32B1ACF4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21E4AB99-E514-4090-8F7D-C8A32B1ACF4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21E4AB99-E514-4090-8F7D-C8A32B1ACF4E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

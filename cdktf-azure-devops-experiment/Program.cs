@@ -26,15 +26,14 @@ namespace MyCompany.MyApp
             
             
             App app = new App();
-            new MainStack(app, "cdktf-azure-devops-experiment", new MainStackOptions()
-            {
-                CdkTfBackendAzureResourceGroupName = cdkTfBackendAzureResourceGroupName,
-                CdkTfBackendAzureStorageAccountName = cdkTfBackendAzureStorageAccountName,
-                CdkTfBackendAzureStorageContainerName = cdkTfBackendAzureStorageContainerName,
-                AzureDevopsOrganizationUrl = azureDevopsOrganizationUrl,
-                AzureDevopsPersonalAccessToken = azurePersonalAccessToken,
-                GithubPersonalAccessToken = githubPersonalAccessToken,
-            });
+            new MainStack(app, "cdktf-azure-devops-experiment", new MainStackOptions(
+                CdkTfBackendAzureResourceGroupName: cdkTfBackendAzureResourceGroupName,
+                CdkTfBackendAzureStorageAccountName: cdkTfBackendAzureStorageAccountName,
+                CdkTfBackendAzureStorageContainerName: cdkTfBackendAzureStorageContainerName,
+                AzureDevopsOrganizationUrl: azureDevopsOrganizationUrl,
+                AzureDevopsPersonalAccessToken: azurePersonalAccessToken,
+                GithubPersonalAccessToken: githubPersonalAccessToken
+            ));
             app.Synth();
             Console.WriteLine("App synth complete");
         }

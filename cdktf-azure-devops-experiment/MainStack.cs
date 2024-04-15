@@ -6,15 +6,14 @@ using HashiCorp.Cdktf;
 
 namespace MyCompany.MyApp {
 
-    record struct MainStackOptions
-    {
-        public String CdkTfBackendAzureResourceGroupName;
-        public String CdkTfBackendAzureStorageAccountName;
-        public String CdkTfBackendAzureStorageContainerName;
-        public String AzureDevopsOrganizationUrl;
-        public String AzureDevopsPersonalAccessToken;
-        public String GithubPersonalAccessToken;
-    }
+    record struct MainStackOptions(
+        String CdkTfBackendAzureResourceGroupName,
+        String CdkTfBackendAzureStorageAccountName,
+        String CdkTfBackendAzureStorageContainerName,
+        String AzureDevopsOrganizationUrl,
+        String AzureDevopsPersonalAccessToken,
+        String GithubPersonalAccessToken
+    );
     
     class MainStack : TerraformStack
     {

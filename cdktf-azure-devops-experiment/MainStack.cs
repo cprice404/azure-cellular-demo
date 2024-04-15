@@ -8,27 +8,41 @@ namespace MyCompany.MyApp {
 
     record struct MainStackOptions
     {
-        public String azureDevopsOrganizationUrl;
-        public String azureDevopsPersonalAccessToken;
-        public String githubPersonalAccessToken;
+        public String CdkTfBackendAzureResourceGroupName;
+        public String CdkTfBackendAzureStorageAccountName;
+        public String CdkTfBackendAzureStorageContainerName;
+        public String AzureDevopsOrganizationUrl;
+        public String AzureDevopsPersonalAccessToken;
+        public String GithubPersonalAccessToken;
     }
     
     class MainStack : TerraformStack
     {
         public MainStack(Construct scope, string id, MainStackOptions options) : base(scope, id)
         {
-            var providerConfig = new azuredevops.Provider.AzuredevopsProviderConfig();
-            providerConfig.OrgServiceUrl = options.azureDevopsOrganizationUrl;
-            providerConfig.PersonalAccessToken = options.azureDevopsPersonalAccessToken;
+            var azureBackendConfig = new AzurermBackendConfig();
+            azureBackendConfig.ResourceGroupName = options.CdkTfBackendAzureResourceGroupName;
+            azureBackendConfig.StorageAccountName = options.CdkTfBackendAzureStorageAccountName;
+            azureBackendConfig.ContainerName = options.CdkTfBackendAzureStorageContainerName;
+            azureBackendConfig.Key = "MainStack.tfstate";
+            var azureBackend = new AzurermBackend(this, azureBackendConfig);
             
-            var provider = new azuredevops.Provider.AzuredevopsProvider(this, "azuredevopsProvider", providerConfig);
+            var azuredevopsProviderConfig = new azuredevops.Provider.AzuredevopsProviderConfig();
+            azuredevopsProviderConfig.OrgServiceUrl = options.AzureDevopsOrganizationUrl;
+            azuredevopsProviderConfig.PersonalAccessToken = options.AzureDevopsPersonalAccessToken;
+            
+            var azuredevopsProvider = new azuredevops.Provider.AzuredevopsProvider(this, "azuredevopsProvider", azuredevopsProviderConfig);
+            
+            
+            
+            
             var projectConfig = new azuredevops.Project.ProjectConfig();
             projectConfig.Name = "myCdkTfProject";
             Console.WriteLine("TACO");
             var project = new azuredevops.Project.Project(this, "myproject", projectConfig);
 
             var githubServiceEndpointAuth = new azuredevops.ServiceendpointGithub.ServiceendpointGithubAuthPersonal();
-            githubServiceEndpointAuth.PersonalAccessToken = options.githubPersonalAccessToken;
+            githubServiceEndpointAuth.PersonalAccessToken = options.GithubPersonalAccessToken;
             
             var githubServiceEndpointConfig = new azuredevops.ServiceendpointGithub.ServiceendpointGithubConfig();
             githubServiceEndpointConfig.ProjectId = project.Id;

@@ -16,8 +16,10 @@ namespace MyCompany.MyApp
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.json", false)
                     .Build();
-
             
+            String cdkTfBackendAzureResourceGroupName = getConfig(config, "CdkTfBackendAzureResourceGroupName");
+            String cdkTfBackendAzureStorageAccountName = getConfig(config, "CdkTfBackendAzureStorageAccountName");
+            String cdkTfBackendAzureStorageContainerName = getConfig(config, "CdkTfBackendAzureStorageContainerName");
             String azureDevopsOrganizationUrl = getConfig(config, "AzureDevopsOrganizationUrl");
             String azurePersonalAccessToken = getConfig(config, "AzureDevopsPersonalAccessToken");
             String githubPersonalAccessToken = getConfig(config, "GithubPersonalAccessToken");
@@ -26,9 +28,12 @@ namespace MyCompany.MyApp
             App app = new App();
             new MainStack(app, "cdktf-azure-devops-experiment", new MainStackOptions()
             {
-                azureDevopsOrganizationUrl = azureDevopsOrganizationUrl,
-                azureDevopsPersonalAccessToken = azurePersonalAccessToken,
-                githubPersonalAccessToken = githubPersonalAccessToken,
+                CdkTfBackendAzureResourceGroupName = cdkTfBackendAzureResourceGroupName,
+                CdkTfBackendAzureStorageAccountName = cdkTfBackendAzureStorageAccountName,
+                CdkTfBackendAzureStorageContainerName = cdkTfBackendAzureStorageContainerName,
+                AzureDevopsOrganizationUrl = azureDevopsOrganizationUrl,
+                AzureDevopsPersonalAccessToken = azurePersonalAccessToken,
+                GithubPersonalAccessToken = githubPersonalAccessToken,
             });
             app.Synth();
             Console.WriteLine("App synth complete");

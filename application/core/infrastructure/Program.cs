@@ -1,5 +1,6 @@
 using System;
-using Constructs;
+using cell_registry;
+using CoreInfrastructure;
 using HashiCorp.Cdktf;
 
 namespace MyCompany.MyApp
@@ -8,8 +9,10 @@ namespace MyCompany.MyApp
     {
         public static void Main(string[] args)
         {
+            ICellRegistry cellRegistry = CellRegistry.Default();
+            
             App app = new App();
-            new MainStack(app, "infrastructure");
+            new CoreInfrastructureStack(app, "core-infrastructure");
             app.Synth();
             Console.WriteLine("App synth complete");
         }

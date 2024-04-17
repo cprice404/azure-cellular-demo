@@ -18,7 +18,8 @@ internal class HardCodedCellRegistry : ICellRegistry
                 ResourceGroupName: "cdktf-state",
                 StorageAccountName: "cdktfstate187",
                 ContainerName: "cdktf-state"
-            )
+            ),
+            Location: "westus2"
         ));
     }
 

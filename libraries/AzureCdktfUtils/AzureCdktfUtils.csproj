@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="HashiCorp.Cdktf" Version="0.20.6" />
+    <PackageReference Include="HashiCorp.Cdktf.Providers.Azurerm" Version="12.11.1" />
   </ItemGroup>
 
   <ItemGroup>

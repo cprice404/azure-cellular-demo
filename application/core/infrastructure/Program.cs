@@ -13,7 +13,7 @@ namespace MyCompany.MyApp
             Cell cell = cellRegistry.GetCellForCurrentSubscription();
             
             App app = new App();
-            new CoreInfrastructureStack(app, "core-infrastructure", cell.BackendStorageContainer);
+            new CoreInfrastructureStack(app, "core-infrastructure", cell.BackendStorageContainer, cell.Location);
             app.Synth();
             Console.WriteLine("App synth complete");
         }

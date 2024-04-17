@@ -10,5 +10,6 @@ public record struct Cell(
     String SubscriptionId,
     String CellName,
     CellType CellType,
-    AzureBackendStorageContainer BackendStorageContainer
+    AzureBackendStorageContainer BackendStorageContainer,
+    String Location
 );

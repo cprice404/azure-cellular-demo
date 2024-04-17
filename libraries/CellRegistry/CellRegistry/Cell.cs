@@ -1,4 +1,4 @@
-namespace cell_registry;
+namespace CellRegistry;
 
 public enum CellType
 {
@@ -6,4 +6,9 @@ public enum CellType
     PREPROD,
     PROD
 }
-public record struct Cell(String subscriptionId, String cellName, CellType cellType);
+public record struct Cell(
+    String SubscriptionId,
+    String CellName,
+    CellType CellType,
+    AzureBackendStorageContainer BackendStorageContainer
+);

@@ -1,18 +1,25 @@
 using System.Diagnostics;
 using System.Text.Json;
-using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
-using cell_registry;
 
-class HardCodedCellRegistry : ICellRegistry
+namespace CellRegistry;
+
+internal class HardCodedCellRegistry : ICellRegistry
 {
     private readonly Dictionary<String, Cell> cells = new();
     
     internal HardCodedCellRegistry()
     {
-        var developerChrisSubscriptionId = "5cf20061-1947-49d1-915b-4c0345485985";
-        cells.Add(developerChrisSubscriptionId, new Cell(developerChrisSubscriptionId, "developer-chris", CellType.DEVELOPER));
+        var developerChrisSubscriptionId = "7c6aa098-eff7-4553-8f9e-3ce1c045c8c9";
+        cells.Add(developerChrisSubscriptionId, new Cell(
+            SubscriptionId: developerChrisSubscriptionId,
+            CellName: "developer-chris",
+            CellType: CellType.DEVELOPER,
+            BackendStorageContainer: new AzureBackendStorageContainer(
+                ResourceGroupName: "cdktf-state",
+                StorageAccountName: "cdktfstate187",
+                ContainerName: "cdktf-state"
+            )
+        ));
     }
 
 

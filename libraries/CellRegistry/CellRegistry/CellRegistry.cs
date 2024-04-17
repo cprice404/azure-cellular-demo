@@ -1,4 +1,4 @@
-using cell_registry;
+namespace CellRegistry;
 
 public class CellRegistry
 {

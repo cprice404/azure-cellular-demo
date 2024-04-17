@@ -1,5 +1,5 @@
 using System;
-using cell_registry;
+using CellRegistry;
 using CoreInfrastructure;
 using HashiCorp.Cdktf;
 
@@ -9,10 +9,11 @@ namespace MyCompany.MyApp
     {
         public static void Main(string[] args)
         {
-            ICellRegistry cellRegistry = CellRegistry.Default();
+            ICellRegistry cellRegistry = CellRegistry.CellRegistry.Default();
+            Cell cell = cellRegistry.GetCellForCurrentSubscription();
             
             App app = new App();
-            new CoreInfrastructureStack(app, "core-infrastructure");
+            new CoreInfrastructureStack(app, "core-infrastructure", cell.BackendStorageContainer);
             app.Synth();
             Console.WriteLine("App synth complete");
         }

@@ -1,16 +1,12 @@
-﻿using HashiCorp.Cdktf;
+﻿using CellRegistry;
+using HashiCorp.Cdktf;
 
-namespace azure_cdktf_utils;
+namespace AzureCdktfUtils;
 
-public class AzureCdkTfUtils
+public static class AzureCdkTfUtils
 {
-    public record struct BackendStorageContainer(
-        string ResourceGroupName,
-        string StorageAccountName,
-        string ContainerName
-    );
     public static void RegisterAzureProviderAndBackend(
-        BackendStorageContainer backendStorageContainer,
+        AzureBackendStorageContainer backendStorageContainer,
         string stackName,
         TerraformStack stack
     )

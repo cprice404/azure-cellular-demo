@@ -1,4 +1,5 @@
-﻿namespace cell_registry;
+﻿
+namespace CellRegistry;
 
 public interface ICellRegistry
 {

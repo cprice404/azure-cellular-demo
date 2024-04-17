@@ -5,6 +5,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <GenerateProgramFile>false</GenerateProgramFile>
     <LangVersion>10</LangVersion>
+    <DefaultItemExcludes>$(DefaultItemExcludes);node_modules\**\*</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>

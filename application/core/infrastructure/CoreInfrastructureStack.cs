@@ -33,7 +33,11 @@ class CoreInfrastructureStack : TerraformStack
             {
                 Name = "default",
                 NodeCount = 1,
-                VmSize = "Standard_B2s"
+                VmSize = "Standard_B2s",
+                UpgradeSettings = new KubernetesClusterDefaultNodePoolUpgradeSettings()
+                {
+                    MaxSurge = "10%"
+                }
             },
             Location = location,
             DnsPrefix = "azure-cellular-demo",
@@ -43,6 +47,12 @@ class CoreInfrastructureStack : TerraformStack
             {
                 Type = "SystemAssigned"
             }
+        });
+
+        var kubeConfigOutput = new TerraformOutput(this, "kube_config", new TerraformOutputConfig()
+        {
+            Value = cluster.KubeConfigRaw,
+            Sensitive = true
         });
     }
 }

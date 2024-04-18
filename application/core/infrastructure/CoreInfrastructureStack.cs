@@ -33,11 +33,16 @@ class CoreInfrastructureStack : TerraformStack
             {
                 Name = "default",
                 NodeCount = 1,
-                VmSize = "Standard_B1ms"
+                VmSize = "Standard_B2s"
             },
             Location = location,
-            DnsPrefixPrivateCluster = "azure-cellular-demo",
-            ServicePrincipal = 
+            DnsPrefix = "azure-cellular-demo",
+            OidcIssuerEnabled = true,
+            WorkloadIdentityEnabled = true,
+            Identity = new KubernetesClusterIdentity()
+            {
+                Type = "SystemAssigned"
+            }
         });
     }
 }

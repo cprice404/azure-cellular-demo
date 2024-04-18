@@ -1,9 +1,6 @@
 using Xunit;
-using HashiCorp.Cdktf;
-using System;
-using System.Collections.Generic;
 
-namespace MyCompany.MyApp{
+namespace TimeServiceInfrastructure{
     // The tests below are example tests, you can find more information at
     // https://cdk.tf/testing
     public class TestProgram{

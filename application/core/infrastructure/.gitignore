@@ -343,3 +343,5 @@ ASALocalRun/
 
 
 # End of https://www.gitignore.io/api/csharp
+azurek8s_kube_config
+core-infra-stack-outputs.json

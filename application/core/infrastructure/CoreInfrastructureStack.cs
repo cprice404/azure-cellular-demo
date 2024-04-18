@@ -2,17 +2,25 @@ using AzureCdktfUtils;
 using CellRegistry;
 using Constructs;
 using HashiCorp.Cdktf;
+using HashiCorp.Cdktf.Providers.Azurerm.ContainerRegistry;
 using HashiCorp.Cdktf.Providers.Azurerm.KubernetesCluster;
 using HashiCorp.Cdktf.Providers.Azurerm.ResourceGroup;
+using HashiCorp.Cdktf.Providers.Azurerm.RoleAssignment;
 
 namespace CoreInfrastructure;
 
 class CoreInfrastructureStack : TerraformStack
 {
-    public CoreInfrastructureStack(Construct scope, string id, AzureBackendStorageContainer backendStorageContainer, string location) : base(scope, id)
+    
+    public record struct Options(
+        AzureBackendStorageContainer BackendStorageContainer,
+        string Location,
+        string CellName
+    );
+    public CoreInfrastructureStack(Construct scope, string id, Options options) : base(scope, id)
     {
         AzureCdkTfUtils.RegisterAzureProviderAndBackend(
-            backendStorageContainer: backendStorageContainer,
+            backendStorageContainer: options.BackendStorageContainer,
             stackName: "CoreInfrastructure",
             stack: this
         );
@@ -20,11 +28,9 @@ class CoreInfrastructureStack : TerraformStack
         ResourceGroup rg = new ResourceGroup(this, "core-infra-rg", new ResourceGroupConfig
         {
             Name = "azure-cellular-demo-core-infra-rg",
-            Location = location
+            Location = options.Location
         });
 
-        KubernetesClusterServicePrincipal sp = new KubernetesClusterServicePrincipal();
-        
         KubernetesCluster cluster = new KubernetesCluster(this, "k8s-cluster", new KubernetesClusterConfig
         {
             Name = "azure-cellular-demo-k8s-cluster",
@@ -39,7 +45,7 @@ class CoreInfrastructureStack : TerraformStack
                     MaxSurge = "10%"
                 }
             },
-            Location = location,
+            Location = options.Location,
             DnsPrefix = "azure-cellular-demo",
             OidcIssuerEnabled = true,
             WorkloadIdentityEnabled = true,
@@ -53,6 +59,22 @@ class CoreInfrastructureStack : TerraformStack
         {
             Value = cluster.KubeConfigRaw,
             Sensitive = true
+        });
+        
+        
+        var containerRegistry = new ContainerRegistry(this, "azure-cellular-demo-acr", new ContainerRegistryConfig()
+        {
+            Name = $"azurecelldemo{options.CellName}",
+            ResourceGroupName = rg.Name,
+            Location = options.Location,
+            Sku = "Basic"
+        });
+        
+        var aksAcrRoleAssignment = new RoleAssignment(this, "aks-acr-role-assignment", new RoleAssignmentConfig()
+        {
+            PrincipalId = cluster.KubeletIdentity.ObjectId,
+            RoleDefinitionName = "AcrPull",
+            Scope = containerRegistry.Id
         });
     }
 }

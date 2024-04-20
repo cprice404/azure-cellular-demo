@@ -5,4 +5,5 @@ public interface ICellRegistry
 {
     Cell GetCellBySubscriptionId(String subscriptionId);
     Cell GetCellForCurrentSubscription();
+    string CoreInfrastructureResourceGroupName { get; }
 }

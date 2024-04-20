@@ -1,0 +1,11 @@
+{
+  "language": "csharp",
+  "app": "dotnet run -p HelloServiceInfrastructure.csproj",
+  "projectId": "aca1403d-1106-4758-9c15-d1b5f8507303",
+  "sendCrashReports": "true",
+  "terraformProviders": [],
+  "terraformModules": [],
+  "context": {
+
+  }
+}

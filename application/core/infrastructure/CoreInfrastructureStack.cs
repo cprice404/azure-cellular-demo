@@ -15,7 +15,8 @@ class CoreInfrastructureStack : TerraformStack
     public record struct Options(
         AzureBackendStorageContainer BackendStorageContainer,
         string Location,
-        string CellName
+        string CellName,
+        string CoreInfrastructureResourceGroupName
     );
     public CoreInfrastructureStack(Construct scope, string id, Options options) : base(scope, id)
     {
@@ -27,7 +28,7 @@ class CoreInfrastructureStack : TerraformStack
 
         ResourceGroup rg = new ResourceGroup(this, "core-infra-rg", new ResourceGroupConfig
         {
-            Name = "azure-cellular-demo-core-infra-rg",
+            Name = options.CoreInfrastructureResourceGroupName,
             Location = options.Location
         });
 

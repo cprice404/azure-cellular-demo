@@ -44,6 +44,8 @@ internal class HardCodedCellRegistry : ICellRegistry
         return cells[defaultSubscriptionId];
     }
     
+    public string CoreInfrastructureResourceGroupName => "azure-cellular-demo-core-infra-rg";
+
     private static string GetDefaultAzureSubscriptionId()
     {
         var startInfo = new ProcessStartInfo

@@ -1,9 +1,8 @@
 using System;
 using CellRegistry;
-using CoreInfrastructure;
 using HashiCorp.Cdktf;
 
-namespace MyCompany.MyApp
+namespace HelloServiceInfrastructure
 {
     class Program
     {
@@ -11,9 +10,9 @@ namespace MyCompany.MyApp
         {
             ICellRegistry cellRegistry = CellRegistry.CellRegistry.Default();
             Cell cell = cellRegistry.GetCellForCurrentSubscription();
-            
+
             App app = new App();
-            new CoreInfrastructureStack(app, "core-infrastructure", new CoreInfrastructureStack.Options(
+            new HelloServiceInfrastructureStack(app, "infrastructure", new HelloServiceInfrastructureStack.Options(
                 BackendStorageContainer: cell.BackendStorageContainer,
                 Location: cell.Location,
                 CellName: cell.CellName,

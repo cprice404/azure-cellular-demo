@@ -78,7 +78,7 @@ namespace HelloServiceInfrastructure
                     ApplicationStack = new LinuxWebAppSiteConfigApplicationStack()
                     {
                         DockerRegistryUrl = "https://azurecelldemodeveloperchris.azurecr.io",
-                        DockerImageName = "helloservice:v0.0.11",
+                        DockerImageName = $"helloservice:v{options.HelloServiceVersion}",
                     },
                 },
                 Identity = new LinuxWebAppIdentity()

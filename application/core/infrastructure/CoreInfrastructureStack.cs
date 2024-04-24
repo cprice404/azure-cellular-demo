@@ -82,9 +82,9 @@ class CoreInfrastructureStack : TerraformStack
             Scope = containerRegistry.Id
         });
 
-        var appConfigStore = new AppConfiguration(this, "azure-cellular-demo-appconfig3", new AppConfigurationConfig()
+        var appConfigStore = new AppConfiguration(this, "azure-cellular-demo-appconfig", new AppConfigurationConfig()
         {
-            Name = "azure-cellular-demo-appconfig3",
+            Name = "azure-cellular-demo-appconfig",
             ResourceGroupName = rg.Name,
             Location = options.Location
         });
@@ -108,9 +108,9 @@ class CoreInfrastructureStack : TerraformStack
             Value = "samplevalue",
             Timeouts = new AppConfigurationKeyTimeouts()
             {
-                Create = "1m",
-                Delete = "1m",
-                Update = "1m"
+                Create = "2m",
+                Delete = "2m",
+                Update = "2m"
             },
             DependsOn = (new List<ITerraformDependable>() {appConfigDataOwner}).ToArray()
         });

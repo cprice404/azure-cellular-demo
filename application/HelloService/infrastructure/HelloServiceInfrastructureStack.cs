@@ -3,6 +3,8 @@ using AzureCdktfUtils;
 using CellRegistry;
 using Constructs;
 using HashiCorp.Cdktf;
+using HashiCorp.Cdktf.Providers.Azurerm.DataAzurermAppConfiguration;
+using HashiCorp.Cdktf.Providers.Azurerm.DataAzurermAppConfigurationKey;
 using HashiCorp.Cdktf.Providers.Azurerm.DataAzurermContainerRegistry;
 using HashiCorp.Cdktf.Providers.Azurerm.LinuxWebApp;
 using HashiCorp.Cdktf.Providers.Azurerm.ResourceGroup;
@@ -17,7 +19,8 @@ namespace HelloServiceInfrastructure
             AzureBackendStorageContainer BackendStorageContainer,
             string Location,
             string CellName,
-            string CoreInfrastructureResourceGroupName
+            string CoreInfrastructureResourceGroupName,
+            string HelloServiceVersion
         );
         
         public HelloServiceInfrastructureStack(Construct scope, string id, Options options) : base(scope, id)
@@ -49,6 +52,18 @@ namespace HelloServiceInfrastructure
                 SkuName = "B1",
             });
 
+            var appConfig = new DataAzurermAppConfiguration(this, "app-config", new DataAzurermAppConfigurationConfig()
+            {
+                Name = "azure-cellular-demo-appconfig",
+                ResourceGroupName = options.CoreInfrastructureResourceGroupName
+            });
+            
+            var timeServiceAddressKey = new DataAzurermAppConfigurationKey(this, "time-service-address-key", new DataAzurermAppConfigurationKeyConfig()
+            {
+                Key = "timeservice_address",
+                ConfigurationStoreId = appConfig.Id,
+            });
+
             var app = new LinuxWebApp(this, "helloservice-app", new LinuxWebAppConfig()
             {
                 Name = $"helloservice-{options.CellName}",
@@ -63,7 +78,7 @@ namespace HelloServiceInfrastructure
                     ApplicationStack = new LinuxWebAppSiteConfigApplicationStack()
                     {
                         DockerRegistryUrl = "https://azurecelldemodeveloperchris.azurecr.io",
-                        DockerImageName = "helloservice:v0.0.1",
+                        DockerImageName = "helloservice:v0.0.11",
                     },
                 },
                 Identity = new LinuxWebAppIdentity()
@@ -72,7 +87,9 @@ namespace HelloServiceInfrastructure
                 },
                 AppSettings = new Dictionary<string, string>()
                 {
-                    {"WEBSITES_PORT", "8080"}
+                    { "WEBSITES_PORT", "8080" },
+                    { "HELLO_SERVICE_VERSION", options.HelloServiceVersion },
+                    { "TIME_SERVICE_ADDRESS", timeServiceAddressKey.Value }
                 }
             });
 

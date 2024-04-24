@@ -16,7 +16,8 @@ namespace HelloServiceInfrastructure
                 BackendStorageContainer: cell.BackendStorageContainer,
                 Location: cell.Location,
                 CellName: cell.CellName,
-                CoreInfrastructureResourceGroupName: cellRegistry.CoreInfrastructureResourceGroupName
+                CoreInfrastructureResourceGroupName: cellRegistry.CoreInfrastructureResourceGroupName,
+                HelloServiceVersion: "0.0.00"
             ));
             app.Synth();
             Console.WriteLine("App synth complete");

@@ -1,4 +1,5 @@
-﻿using CommandLine;
+﻿using CellRegistry;
+using CommandLine;
 
 namespace CellBootstrap
 {
@@ -27,13 +28,50 @@ namespace CellBootstrap
         
         static int RunBootstrapAndReturnExitCode(BootstrapOptions opts)
         {
-            Console.WriteLine("BOOTSTRAP!");
+            ICellRegistry cellRegistry = CellRegistry.CellRegistry.Default();
+            Cell cell = cellRegistry.GetCellForCurrentSubscription();
+            
+            DirectoryInfo cwd = Directory.GetParent(Directory.GetCurrentDirectory());
+            foreach (ApplicationComponent appComponent in ApplicationComponents.GetAllComponents())
+            {
+                var appComponentPath = Path.Join(cwd.FullName, appComponent.PathFromRoot);
+                Console.WriteLine("Running bootstrap for {0}", appComponentPath);
+                int exitCode = ShellUtils.ExecuteShellCommand(
+                    appComponentPath,
+                    "make",
+                    "cell-bootstrap",
+                    new Dictionary<string, string>()
+                    {
+                        { "CELL_NAME", cell.CellName }
+                    }
+                );
+                if (exitCode != 0)
+                {
+                    return exitCode;
+                }
+            }
+            return 0;
             return 0;
         }
         
         static int RunTearDownAndReturnExitCode(TearDownOptions opts)
         {
-            Console.WriteLine("TEARDOWN!");
+            DirectoryInfo cwd = Directory.GetParent(Directory.GetCurrentDirectory());
+            foreach (ApplicationComponent appComponent in Enumerable.Reverse(ApplicationComponents.GetAllComponents()))
+            {
+                var appComponentPath = Path.Join(cwd.FullName, appComponent.PathFromRoot);
+                Console.WriteLine("Running teardown for {0}", appComponentPath);
+                int exitCode = ShellUtils.ExecuteShellCommand(
+                    appComponentPath, 
+                    "make", 
+                    "cell-teardown", 
+                    new Dictionary<string, string>()
+                );
+                if (exitCode != 0)
+                {
+                    return exitCode;
+                }
+            }
             return 0;
         }
         

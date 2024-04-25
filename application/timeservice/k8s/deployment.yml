@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: timeservice
-          image: azurecelldemodeveloperchris.azurecr.io/timeservice:latest
+          image: azurecelldemo${CELL_NAME}.azurecr.io/timeservice:v${TIMESERVICE_VERSION}
           ports:
           - containerPort: 8080

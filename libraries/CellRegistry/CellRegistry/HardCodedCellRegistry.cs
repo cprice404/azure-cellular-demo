@@ -12,7 +12,7 @@ internal class HardCodedCellRegistry : ICellRegistry
         var developerChrisSubscriptionId = "7c6aa098-eff7-4553-8f9e-3ce1c045c8c9";
         cells.Add(developerChrisSubscriptionId, new Cell(
             SubscriptionId: developerChrisSubscriptionId,
-            CellName: "DeveloperChris",
+            CellName: "developerchris",
             CellType: CellType.DEVELOPER,
             BackendStorageContainer: new AzureBackendStorageContainer(
                 ResourceGroupName: "cdktf-state",

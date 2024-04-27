@@ -23,7 +23,7 @@ namespace MyCompany.MyApp {
             azureBackendConfig.ResourceGroupName = options.CdkTfBackendAzureResourceGroupName;
             azureBackendConfig.StorageAccountName = options.CdkTfBackendAzureStorageAccountName;
             azureBackendConfig.ContainerName = options.CdkTfBackendAzureStorageContainerName;
-            azureBackendConfig.Key = "MainStack.tfstate";
+            azureBackendConfig.Key = "PipelinesStack.tfstate";
             var azureBackend = new AzurermBackend(this, azureBackendConfig);
             
             var azuredevopsProviderConfig = new azuredevops.Provider.AzuredevopsProviderConfig();

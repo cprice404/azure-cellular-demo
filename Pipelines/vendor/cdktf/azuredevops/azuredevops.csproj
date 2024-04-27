@@ -20,6 +20,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RollForward>Major</RollForward>
+    <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="azuredevops-0.0.0.tgz" />
@@ -34,6 +35,7 @@
     <NoWarn>0612,0618</NoWarn>
     <!-- Treat warnings symptomatic of code generation bugs as errors -->
     <WarningsAsErrors>0108,0109</WarningsAsErrors>
+    <NoWarn>1573,8602</NoWarn>
   </PropertyGroup>
 </Project>
 

@@ -28,7 +28,7 @@
   <ItemGroup>
     <PackageReference Include="Amazon.JSII.Runtime" Version="[1.95.0,2.0.0)" />
     <PackageReference Include="HashiCorp.Cdktf" Version="[0.20.6]" />
-    <PackageReference Include="Constructs" Version="[10.1.167]" />
+    <PackageReference Include="Constructs" Version="[10.3.0]" />
   </ItemGroup>
   <PropertyGroup>
     <!-- Silence [Obsolete] warnings -->

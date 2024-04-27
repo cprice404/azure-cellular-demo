@@ -1,0 +1,58 @@
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+#  # Container registry service connection established during pipeline creation
+#  dockerRegistryServiceConnection: 'b5d72c40-6ec8-4f0c-ac35-90d1b83fce46'
+#  imageRepository: 'helloworldservice'
+#  containerRegistry: 'helloworldservicecontainer.azurecr.io'
+#  dockerfilePath: '**/Dockerfile'
+#  tag: '$(Build.BuildId)'
+#  imagePullSecret: 'helloworldservicecontainera590-auth'
+#
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+#
+#  # Name of the new namespace being created to deploy the PR changes.
+#  k8sNamespaceForPR: 'review-app-$(System.PullRequest.PullRequestId)'
+
+stages:
+- stage: Build
+  displayName: Build
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+      - script: |
+          echo "Hi there!"
+
+#    - task: Docker@2
+#      displayName: Build and push an image to container registry
+#      inputs:
+#        command: buildAndPush
+#        repository: $(imageRepository)
+#        dockerfile: $(dockerfilePath)
+#        containerRegistry: $(dockerRegistryServiceConnection)
+#        tags: |
+#          $(tag)
+#
+#    - upload: manifests
+#      artifact: manifests
+
+- stage: DeployPreprod
+  displayName: Deploy to Preprod
+  dependsOn: Build
+
+  jobs:
+  - job: Terraform Deploy
+    displayName: Terraform Deploy
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+      - script: |
+          echo "Maybe I'll do some TF stuff now!"

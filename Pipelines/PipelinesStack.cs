@@ -56,7 +56,7 @@ namespace MyCompany.MyApp {
             var pipelineRepository = new azuredevops.BuildDefinition.BuildDefinitionRepository();
             pipelineRepository.RepoId = "cprice404/azure-cellular-demo";
             pipelineRepository.RepoType = "GitHub";
-            pipelineRepository.YmlPath = "cdktf-azure-devops-experiment/cdktf-azure-pipeline.yml";
+            pipelineRepository.YmlPath = "Pipelines/sample-pipeline.yml";
             pipelineRepository.ServiceConnectionId = githubServiceEndpoint.Id;
             pipelineRepository.BranchName = "refs/heads/main";
 
@@ -90,14 +90,16 @@ namespace MyCompany.MyApp {
                 
             
             var pipelineConfig = new azuredevops.BuildDefinition.BuildDefinitionConfig();
-            pipelineConfig.Name = "myFirstPipeline";
+            pipelineConfig.Name = "CoreInfrastructure";
             pipelineConfig.Repository = pipelineRepository;
             pipelineConfig.ProjectId = project.Id;
             pipelineConfig.Variable = pipelineVariables.ToArray();
             pipelineConfig.CiTrigger = pipelineCiTrigger;
+            pipelineConfig.Path = "/application/Core";
+            
             // pipelineConfig.PullRequestTrigger = pipelinePullRequestTrigger;
             var pipelineDefinition =
-                new azuredevops.BuildDefinition.BuildDefinition(this, "myFirstPipeline", pipelineConfig);
+                new azuredevops.BuildDefinition.BuildDefinition(this, "CoreInfrastructurePipeline", pipelineConfig);
         }
     }
 }

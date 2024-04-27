@@ -60,3 +60,4 @@ stages:
     steps:
       - script: |
           echo "Maybe I'll do some TF stuff now!"
+          az account show

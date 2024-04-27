@@ -59,7 +59,7 @@ namespace PipelinesStack {
             var pipelineRepository = new BuildDefinitionRepository();
             pipelineRepository.RepoId = "cprice404/azure-cellular-demo";
             pipelineRepository.RepoType = "GitHub";
-            pipelineRepository.YmlPath = "Pipelines/sample-pipeline.yml";
+            pipelineRepository.YmlPath = "Pipelines/PipelinesStack/sample-pipeline.yml";
             pipelineRepository.ServiceConnectionId = githubServiceEndpoint.Id;
             pipelineRepository.BranchName = "refs/heads/main";
 

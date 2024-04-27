@@ -58,12 +58,17 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
+      - displayName: 'echo stuff'
+        script: |
+          echo "Hi there!"
       - script: |
           echo "Maybe I'll do some TF stuff now!"
-#          az account show
       - task: AzureCLI@2
         inputs:
           azureSubscription: 'CICD-subscription-service-connection'
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
           inlineScript: 'az account show'
+      - displayName: 'do I still have az perms?'
+        script: |
+          az account show

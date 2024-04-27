@@ -63,7 +63,7 @@ stages:
 #          az account show
       - task: AzureCLI@2
         inputs:
-          azureSubscription: 'celldemo-CICD'
+          azureSubscription: 'CICD-subscription-service-connection'
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
           inlineScript: 'az account show'

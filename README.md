@@ -11,4 +11,5 @@ NOTES:
   * must enable storage service for subscription first
   * https://learn.microsoft.com/en-us/azure/developer/terraform/store-state-in-azure-storage?tabs=azure-cli
 
+* When you want to add a pipeline that needs azure permissions for a new subscription, you need to go to the azure devops console, then go to your project, project settings, "service connections" (under Pipelines tab), and add a service connection.
 

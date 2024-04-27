@@ -1,6 +1,10 @@
 trigger:
-- main
-
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - '/application/Core/**'
 resources:
 - repo: self
 

@@ -1,5 +1,9 @@
 using System;
 using System.Collections.Generic;
+using azuredevops.BuildDefinition;
+using azuredevops.Project;
+using azuredevops.Provider;
+using azuredevops.ServiceendpointGithub;
 using Constructs;
 using HashiCorp.Cdktf;
 
@@ -24,59 +28,70 @@ namespace PipelinesStack {
             azureBackendConfig.ContainerName = options.CdkTfBackendAzureStorageContainerName;
             azureBackendConfig.Key = "PipelinesStack.tfstate";
             var azureBackend = new AzurermBackend(this, azureBackendConfig);
-            
-            var azuredevopsProviderConfig = new azuredevops.Provider.AzuredevopsProviderConfig();
+
+            var azuredevopsProviderConfig = new AzuredevopsProviderConfig();
             azuredevopsProviderConfig.OrgServiceUrl = options.AzureDevopsOrganizationUrl;
             azuredevopsProviderConfig.PersonalAccessToken = options.AzureDevopsPersonalAccessToken;
-            
-            var azuredevopsProvider = new azuredevops.Provider.AzuredevopsProvider(this, "azuredevopsProvider", azuredevopsProviderConfig);
-            
-            
-            
-            
-            var projectConfig = new azuredevops.Project.ProjectConfig();
-            projectConfig.Name = "Azure Cellular Demo";
-            var project = new azuredevops.Project.Project(this, "myproject", projectConfig);
 
-            var githubServiceEndpointAuth = new azuredevops.ServiceendpointGithub.ServiceendpointGithubAuthPersonal();
+            var azuredevopsProvider =
+                new AzuredevopsProvider(this, "azuredevopsProvider", azuredevopsProviderConfig);
+
+
+
+
+            var projectConfig = new ProjectConfig();
+            projectConfig.Name = "Azure Cellular Demo";
+            var project = new Project(this, "myproject", projectConfig);
+
+            var githubServiceEndpointAuth = new ServiceendpointGithubAuthPersonal();
             githubServiceEndpointAuth.PersonalAccessToken = options.GithubPersonalAccessToken;
-            
-            var githubServiceEndpointConfig = new azuredevops.ServiceendpointGithub.ServiceendpointGithubConfig();
+
+            var githubServiceEndpointConfig = new ServiceendpointGithubConfig();
             githubServiceEndpointConfig.ProjectId = project.Id;
             githubServiceEndpointConfig.ServiceEndpointName = "Github Service Connection";
             githubServiceEndpointConfig.AuthPersonal = githubServiceEndpointAuth;
-            
-            var githubServiceEndpoint =
-                new azuredevops.ServiceendpointGithub.ServiceendpointGithub(this, "azureDevopsGithubEndpoint",
-                    githubServiceEndpointConfig);
-            
 
-            var pipelineRepository = new azuredevops.BuildDefinition.BuildDefinitionRepository();
+            var githubServiceEndpoint =
+                new ServiceendpointGithub(this, "azureDevopsGithubEndpoint",
+                    githubServiceEndpointConfig);
+
+
+            var pipelineRepository = new BuildDefinitionRepository();
             pipelineRepository.RepoId = "cprice404/azure-cellular-demo";
             pipelineRepository.RepoType = "GitHub";
             pipelineRepository.YmlPath = "Pipelines/sample-pipeline.yml";
             pipelineRepository.ServiceConnectionId = githubServiceEndpoint.Id;
             pipelineRepository.BranchName = "refs/heads/main";
 
-            var pipelineVariables = new List<azuredevops.BuildDefinition.BuildDefinitionVariable>();
-            pipelineVariables.Add(new azuredevops.BuildDefinition.BuildDefinitionVariable()
+            var pipelineVariables = new List<BuildDefinitionVariable>();
+            pipelineVariables.Add(new BuildDefinitionVariable
             {
                 Name = "FOO",
                 Value = "FOOOOOOOOO!"
             });
-            pipelineVariables.Add(new azuredevops.BuildDefinition.BuildDefinitionVariable()
+            pipelineVariables.Add(new BuildDefinitionVariable
             {
                 Name = "BAR",
                 Value = "BAAAAAAAAAAR!"
             });
-            
+
             // var pipelineCiTriggerOverride = new azuredevops.BuildDefinition.BuildDefinitionCiTriggerOverride();
             // pipelineCiTriggerOverride.BranchFilter =
             //     new List<azuredevops.BuildDefinition.BuildDefinitionCiTriggerOverrideBranchFilter>().ToArray();
-            
-            var pipelineCiTrigger = new azuredevops.BuildDefinition.BuildDefinitionCiTrigger();
+
+            var pipelineCiTrigger = new BuildDefinitionCiTrigger();
             pipelineCiTrigger.UseYaml = true;
-            // pipelineCiTrigger.Override = pipelineCiTriggerOverride; 
+            // pipelineCiTrigger.Override = new BuildDefinitionCiTriggerOverride
+            // {
+            //     PathFilter = new List<BuildDefinitionCiTriggerOverridePathFilter>
+            //     {
+            //         new()
+            //         {
+            //             Include = new[] {"/application/Core/**"} 
+            //         }
+            //     }.ToArray()
+            // };
+        // pipelineCiTrigger.Override = pipelineCiTriggerOverride; 
 
             // var pipelinePullRequestTriggerForks =
             //     new azuredevops.BuildDefinition.BuildDefinitionPullRequestTriggerForks();
@@ -87,7 +102,7 @@ namespace PipelinesStack {
             // pipelinePullRequestTrigger.Forks = pipelinePullRequestTriggerForks;
                 
             
-            var pipelineConfig = new azuredevops.BuildDefinition.BuildDefinitionConfig();
+            var pipelineConfig = new BuildDefinitionConfig();
             pipelineConfig.Name = "CoreInfrastructure";
             pipelineConfig.Repository = pipelineRepository;
             pipelineConfig.ProjectId = project.Id;
@@ -97,7 +112,7 @@ namespace PipelinesStack {
             
             // pipelineConfig.PullRequestTrigger = pipelinePullRequestTrigger;
             var pipelineDefinition =
-                new azuredevops.BuildDefinition.BuildDefinition(this, "CoreInfrastructurePipeline", pipelineConfig);
+                new BuildDefinition(this, "CoreInfrastructurePipeline", pipelineConfig);
         }
     }
 }

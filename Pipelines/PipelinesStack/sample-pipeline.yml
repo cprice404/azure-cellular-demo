@@ -58,9 +58,9 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-      - displayName: 'echo stuff'
-        script: |
+      - script: |
           echo "Hi there!"
+        displayName: 'echo stuff'
       - script: |
           echo "Maybe I'll do some TF stuff now!"
       - task: AzureCLI@2
@@ -69,6 +69,6 @@ stages:
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
           inlineScript: 'az account show'
-      - displayName: 'do I still have az perms?'
-        script: |
+      - script: |
           az account show
+        displayName: 'do I still have az perms?'

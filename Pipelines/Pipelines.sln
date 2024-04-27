@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipelinesStack", "PipelinesStack.csproj", "{F607730A-90A9-4F51-9787-57887CF3F484}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipelinesStack", "PipelinesStack\PipelinesStack.csproj", "{F607730A-90A9-4F51-9787-57887CF3F484}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "azuredevops", "vendor\cdktf\azuredevops\azuredevops.csproj", "{565654B8-C643-477E-80FF-BC5D421F2882}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "azuredevops", "PipelinesStack\vendor\cdktf\azuredevops\azuredevops.csproj", "{565654B8-C643-477E-80FF-BC5D421F2882}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipelinesGenerator", "PipelinesGenerator\PipelinesGenerator.csproj", "{DD142D15-EE78-47B3-B0E4-F28B6FE6508A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +26,9 @@ Global
 		{565654B8-C643-477E-80FF-BC5D421F2882}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{565654B8-C643-477E-80FF-BC5D421F2882}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{565654B8-C643-477E-80FF-BC5D421F2882}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD142D15-EE78-47B3-B0E4-F28B6FE6508A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD142D15-EE78-47B3-B0E4-F28B6FE6508A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD142D15-EE78-47B3-B0E4-F28B6FE6508A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD142D15-EE78-47B3-B0E4-F28B6FE6508A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

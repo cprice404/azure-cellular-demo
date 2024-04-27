@@ -4,6 +4,7 @@ using Constructs;
 using HashiCorp.Cdktf;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
+using PipelinesStack;
 
 namespace MyCompany.MyApp
 {
@@ -26,7 +27,7 @@ namespace MyCompany.MyApp
             
             
             App app = new App();
-            new MainStack(app, "cdktf-azure-devops-experiment", new MainStackOptions(
+            new PipelinesStack.PipelinesStack(app, "azure-cell-demo-pipelines-stack", new PipelinesStackOptions(
                 CdkTfBackendAzureResourceGroupName: cdkTfBackendAzureResourceGroupName,
                 CdkTfBackendAzureStorageAccountName: cdkTfBackendAzureStorageAccountName,
                 CdkTfBackendAzureStorageContainerName: cdkTfBackendAzureStorageContainerName,

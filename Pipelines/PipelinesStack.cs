@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using Constructs;
 using HashiCorp.Cdktf;
 
+namespace PipelinesStack {
 
-namespace MyCompany.MyApp {
-
-    record struct MainStackOptions(
+    record struct PipelinesStackOptions(
         String CdkTfBackendAzureResourceGroupName,
         String CdkTfBackendAzureStorageAccountName,
         String CdkTfBackendAzureStorageContainerName,
@@ -15,9 +14,9 @@ namespace MyCompany.MyApp {
         String GithubPersonalAccessToken
     );
     
-    class MainStack : TerraformStack
+    class PipelinesStack : TerraformStack
     {
-        public MainStack(Construct scope, string id, MainStackOptions options) : base(scope, id)
+        public PipelinesStack(Construct scope, string id, PipelinesStackOptions options) : base(scope, id)
         {
             var azureBackendConfig = new AzurermBackendConfig();
             azureBackendConfig.ResourceGroupName = options.CdkTfBackendAzureResourceGroupName;
@@ -36,8 +35,7 @@ namespace MyCompany.MyApp {
             
             
             var projectConfig = new azuredevops.Project.ProjectConfig();
-            projectConfig.Name = "myCdkTfProject";
-            Console.WriteLine("TACO");
+            projectConfig.Name = "Azure Cellular Demo";
             var project = new azuredevops.Project.Project(this, "myproject", projectConfig);
 
             var githubServiceEndpointAuth = new azuredevops.ServiceendpointGithub.ServiceendpointGithubAuthPersonal();
@@ -95,7 +93,7 @@ namespace MyCompany.MyApp {
             pipelineConfig.ProjectId = project.Id;
             pipelineConfig.Variable = pipelineVariables.ToArray();
             pipelineConfig.CiTrigger = pipelineCiTrigger;
-            pipelineConfig.Path = "/application/Core";
+            pipelineConfig.Path = "\\application\\Core";
             
             // pipelineConfig.PullRequestTrigger = pipelinePullRequestTrigger;
             var pipelineDefinition =

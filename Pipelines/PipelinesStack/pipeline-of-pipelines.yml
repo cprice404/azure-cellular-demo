@@ -10,6 +10,7 @@ resources:
 
 variables:
   - group: github-and-azure-access-tokens
+  - group: service-principal-info
   - name: vmImageName
     value: 'ubuntu-latest'
 
@@ -28,6 +29,28 @@ stages:
   - stage: DeployAllPipelines
     displayName: Deploy all Pipelines
     dependsOn: Build
+
+# appId
+    #
+    #319b5344-422f-4c8d-81eb-0023bce1f0a4
+    #
+    #displayName
+    #
+    #celldemo-service-principal
+    #
+    #password
+    #
+    #********
+    #
+    #tenant
+    #
+    #8388c21f-2c8e-4c4a-915c-546dc979fce6
+    
+# # sh
+    #export ARM_CLIENT_ID="00000000-0000-0000-0000-000000000000"
+    #export ARM_CLIENT_SECRET="12345678-0000-0000-0000-000000000000"
+    #export ARM_TENANT_ID="10000000-0000-0000-0000-000000000000"
+    #export ARM_SUBSCRIPTION_ID="20000000-0000-0000-0000-000000000000"    
     
     jobs:
       - job: TerraformDeploy
@@ -46,14 +69,26 @@ stages:
                 "GithubPersonalAccessToken": "$GithubPersonalAccessToken"
               }' > appsettings.json
             displayName: 'Populate appsettings.json'
-          - task: AzureCLI@2
-            displayName: 'Azure CLI - Terraform Deploy'
-            inputs:
-              azureSubscription: 'CICD-subscription-service-connection'
-              scriptType: 'bash'
-              scriptLocation: 'inlineScript'
-              inlineScript: |
-                cd Pipelines/PipelinesStack
-                dotnet build
-                npm ci
-                npm run deploy -- --auto-approve
+#          - task: AzureCLI@2
+#            displayName: 'Azure CLI - Terraform Deploy'
+#            inputs:
+#              azureSubscription: 'CICD-subscription-service-connection'
+#              scriptType: 'bash'
+#              scriptLocation: 'inlineScript'
+#              inlineScript: |
+#                cd Pipelines/PipelinesStack
+#                dotnet build
+#                npm ci
+#                npm run deploy -- --auto-approve
+          - script: |
+              cd Pipelines/PipelinesStack
+              dotnet build
+              npm ci
+              npm run deploy -- --auto-approve
+            displayName: 'shell: cdktf deploy'
+            env:
+              ARM_CLIENT_ID: $(appId)
+              ARM_CLIENT_SECRET: $(password)
+              ARM_TENANT_ID: $(tenant)
+              # TODO: make this dynamic/variable
+              ARM_SUBSCRIPTION_ID: "c6b57d84-a545-465b-bf2f-037b6f4480a9"

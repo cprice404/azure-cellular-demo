@@ -108,11 +108,30 @@ namespace PipelinesStack {
             pipelineConfig.ProjectId = project.Id;
             pipelineConfig.Variable = pipelineVariables.ToArray();
             pipelineConfig.CiTrigger = pipelineCiTrigger;
-            pipelineConfig.Path = "\\application\\Core";
+            // pipelineConfig.Path = "\\application\\Core";
             
             // pipelineConfig.PullRequestTrigger = pipelinePullRequestTrigger;
             var pipelineDefinition =
                 new BuildDefinition(this, "CoreInfrastructurePipeline", pipelineConfig);
+
+            var pipelineOfPipelinesDefinition = new BuildDefinition(this, "PipelineOfPipelines",
+                new BuildDefinitionConfig()
+                {
+                    Name = "PipelineOfPipelines",
+                    Repository = new BuildDefinitionRepository()
+                    {
+                        RepoId = "cprice404/azure-cellular-demo",
+                        RepoType = "GitHub",
+                        YmlPath = "Pipelines/PipelinesStack/pipeline-of-pipelines.yml",
+                        ServiceConnectionId = githubServiceEndpoint.Id,
+                        BranchName = "refs/heads/main"
+                    },
+                    ProjectId = project.Id,
+                    CiTrigger = new BuildDefinitionCiTrigger()
+                    {
+                        UseYaml = true
+                    }
+                });
         }
     }
 }

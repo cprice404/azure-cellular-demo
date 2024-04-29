@@ -92,3 +92,4 @@ stages:
               ARM_TENANT_ID: $(tenant)
               # TODO: make this dynamic/variable
               ARM_SUBSCRIPTION_ID: "c6b57d84-a545-465b-bf2f-037b6f4480a9"
+              AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)

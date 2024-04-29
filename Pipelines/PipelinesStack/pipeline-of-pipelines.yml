@@ -67,7 +67,7 @@ stages:
                 "AzureDevopsOrganizationUrl": "$AzureDevopsOrganizationUrl",
                 "AzureDevopsPersonalAccessToken": "$AzureDevopsPersonalAccessToken",
                 "GithubPersonalAccessToken": "$GithubPersonalAccessToken"
-              }' > appsettings.json
+              }' |envsubst > appsettings.json
             displayName: 'Populate appsettings.json'
 #          - task: AzureCLI@2
 #            displayName: 'Azure CLI - Terraform Deploy'

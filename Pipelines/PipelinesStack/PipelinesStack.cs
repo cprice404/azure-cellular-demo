@@ -31,7 +31,27 @@ namespace PipelinesStack {
 
             var azuredevopsProviderConfig = new AzuredevopsProviderConfig();
             azuredevopsProviderConfig.OrgServiceUrl = options.AzureDevopsOrganizationUrl;
-            azuredevopsProviderConfig.PersonalAccessToken = options.AzureDevopsPersonalAccessToken;
+            // azuredevopsProviderConfig.PersonalAccessToken = options.AzureDevopsPersonalAccessToken;
+            azuredevopsProviderConfig.TenantId = "8388c21f-2c8e-4c4a-915c-546dc979fce6";
+                /*
+                 * [
+                     {
+                       "cloudName": "AzureCloud",
+                       "homeTenantId": "8388c21f-2c8e-4c4a-915c-546dc979fce6",
+                       "id": "4b68fc4a-318e-4926-aad5-9375fa772fe3",
+                       "isDefault": true,
+                       "managedByTenants": [],
+                       "name": "Azure subscription 1",
+                       "state": "Enabled",
+                       "tenantId": "8388c21f-2c8e-4c4a-915c-546dc979fce6",
+                       "user": {
+                         "name": "***",
+                         "type": "servicePrincipal"
+                       }
+                     }
+                   ]
+                   
+                 */
 
             var azuredevopsProvider =
                 new AzuredevopsProvider(this, "azuredevopsProvider", azuredevopsProviderConfig);

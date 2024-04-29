@@ -13,4 +13,4 @@ NOTES:
 
 * When you want to add a pipeline that needs azure permissions for a new subscription, you need to go to the azure devops console, then go to your project, project settings, "service connections" (under Pipelines tab), and add a service connection. Thankfully if you forget to do this, it will detect it at the time that it is parsing the YAML, and put up an error message on the pipeline screen..
 
-* Need to create a variable group to populate appsettings.json
+* Need to create a variable group to populate appsettings.json; first run after that, you will have to approve permissions for it in the console

@@ -33,7 +33,7 @@ namespace PipelinesStack {
             var azuredevopsProviderConfig = new AzuredevopsProviderConfig();
             azuredevopsProviderConfig.OrgServiceUrl = options.AzureDevopsOrganizationUrl;
             // azuredevopsProviderConfig.PersonalAccessToken = options.AzureDevopsPersonalAccessToken;
-            azuredevopsProviderConfig.UseMsi = true;
+            // azuredevopsProviderConfig.UseMsi = true;
             azuredevopsProviderConfig.ClientId = "319b5344-422f-4c8d-81eb-0023bce1f0a4";
             azuredevopsProviderConfig.TenantId = "8388c21f-2c8e-4c4a-915c-546dc979fce6";
             azuredevopsProviderConfig.ClientSecret = Environment.GetEnvironmentVariable("ARM_CLIENT_SECRET");

@@ -9,7 +9,9 @@ resources:
   - repo: self
 
 variables:
-  vmImageName: 'ubuntu-latest'
+  - group: github-and-azure-access-tokens
+  - name: vmImageName
+    value: 'ubuntu-latest'
 
 stages:
   - stage: Build
@@ -33,6 +35,17 @@ stages:
         pool:
           vmImage: $(vmImageName)
         steps:
+          - script: |
+              cd Pipelines/PipelinesStack
+              echo '{
+                "CdkTfBackendAzureResourceGroupName": "$CdkTfBackendAzureResourceGroupName",
+                "CdkTfBackendAzureStorageAccountName": "$CdkTfBackendAzureStorageAccountName",
+                "CdkTfBackendAzureStorageContainerName": "$CdkTfBackendAzureStorageContainerName",
+                "AzureDevopsOrganizationUrl": "$AzureDevopsOrganizationUrl",
+                "AzureDevopsPersonalAccessToken": "$AzureDevopsPersonalAccessToken",
+                "GithubPersonalAccessToken": "$GithubPersonalAccessToken"
+              }' > appsettings.json
+            displayName: 'Populate appsettings.json'
           - task: AzureCLI@2
             displayName: 'Azure CLI - Terraform Deploy'
             inputs:
@@ -43,4 +56,4 @@ stages:
                 cd Pipelines/PipelinesStack
                 dotnet build
                 npm ci
-                npm run deploy
+                npm run deploy -- --auto-approve

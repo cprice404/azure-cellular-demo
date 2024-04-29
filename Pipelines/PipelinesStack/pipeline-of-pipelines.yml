@@ -41,5 +41,6 @@ stages:
               scriptLocation: 'inlineScript'
               inlineScript: |
                 cd Pipelines/PipelinesStack
+                dotnet build
                 npm ci
                 npm run deploy

@@ -61,13 +61,13 @@ stages:
           - script: |
               cd Pipelines/PipelinesStack
               echo '{
-                "CdkTfBackendAzureResourceGroupName": "$CdkTfBackendAzureResourceGroupName",
-                "CdkTfBackendAzureStorageAccountName": "$CdkTfBackendAzureStorageAccountName",
-                "CdkTfBackendAzureStorageContainerName": "$CdkTfBackendAzureStorageContainerName",
-                "AzureDevopsOrganizationUrl": "$AzureDevopsOrganizationUrl",
-                "AzureDevopsPersonalAccessToken": "$AzureDevopsPersonalAccessToken",
-                "GithubPersonalAccessToken": "$GithubPersonalAccessToken"
-              }' |envsubst > appsettings.json
+                "CdkTfBackendAzureResourceGroupName": "$(CdkTfBackendAzureResourceGroupName)",
+                "CdkTfBackendAzureStorageAccountName": "$(CdkTfBackendAzureStorageAccountName)",
+                "CdkTfBackendAzureStorageContainerName": "$(CdkTfBackendAzureStorageContainerName)",
+                "AzureDevopsOrganizationUrl": "$(AzureDevopsOrganizationUrl)",
+                "AzureDevopsPersonalAccessToken": "$(AzureDevopsPersonalAccessToken)",
+                "GithubPersonalAccessToken": "$(GithubPersonalAccessToken)"
+              }' > appsettings.json
             displayName: 'Populate appsettings.json'
 #          - task: AzureCLI@2
 #            displayName: 'Azure CLI - Terraform Deploy'

@@ -27,41 +27,16 @@ stages:
           - script: |
               echo "Any build steps could go here."
 
-  - stage: DeployAllPipelines
-    displayName: Deploy all Pipelines
+  - stage: GeneratePipelineYml
+    displayName: Generate Pipeline Yml
     dependsOn: Build
-
+    
     jobs:
-      - job: TerraformDeploy
-        displayName: Terraform Deploy
+      - job: GeneratePipelineYml
+        displayName: Generate Pipeline Yml
         pool:
           vmImage: $(vmImageName)
         steps:
-          - script: |
-              cd Pipelines/PipelinesStack
-              # TODO: simplify this
-              echo '{
-                "CdkTfBackendAzureResourceGroupName": "$(CdkTfBackendAzureResourceGroupName)",
-                "CdkTfBackendAzureStorageAccountName": "$(CdkTfBackendAzureStorageAccountName)",
-                "CdkTfBackendAzureStorageContainerName": "$(CdkTfBackendAzureStorageContainerName)",
-                "AzureDevopsOrganizationUrl": "$(AzureDevopsOrganizationUrl)",
-                "AzureDevopsPersonalAccessToken": "$(AzureDevopsPersonalAccessToken)",
-                "GithubPersonalAccessToken": "$(GithubPersonalAccessToken)"
-              }' > appsettings.json
-            displayName: 'Populate appsettings.json'
-          - script: |
-              cd Pipelines/PipelinesStack
-              dotnet build
-              npm ci
-              npm run deploy -- --auto-approve
-            displayName: 'shell: cdktf deploy'
-            env:
-              ARM_CLIENT_ID: $(appId)
-              ARM_CLIENT_SECRET: $(password)
-              ARM_TENANT_ID: $(tenant)
-              # TODO: make this dynamic/variable
-              ARM_SUBSCRIPTION_ID: "c6b57d84-a545-465b-bf2f-037b6f4480a9"
-#              AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
           - task: CmdLine@2
             displayName: 'Generate Pipeline yaml files'
             inputs:
@@ -74,5 +49,48 @@ stages:
               script: |
                 echo "TODO: need to commit modified yaml files"
                 git status
+
+  - stage: DeployAllPipelines
+    displayName: Deploy all Pipelines
+    dependsOn: GeneratePipelineYml
+
+    jobs:
+      - job: TerraformDeploy
+        displayName: Terraform Deploy
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+          - task: CmdLine@2
+            displayName: 'Populate appsettings.json'
+            inputs:
+              script: |
+                cd Pipelines/PipelinesStack
+                # TODO: simplify this
+                echo '{
+                  "CdkTfBackendAzureResourceGroupName": "$(CdkTfBackendAzureResourceGroupName)",
+                  "CdkTfBackendAzureStorageAccountName": "$(CdkTfBackendAzureStorageAccountName)",
+                  "CdkTfBackendAzureStorageContainerName": "$(CdkTfBackendAzureStorageContainerName)",
+                  "AzureDevopsOrganizationUrl": "$(AzureDevopsOrganizationUrl)",
+                  "AzureDevopsPersonalAccessToken": "$(AzureDevopsPersonalAccessToken)",
+                  "GithubPersonalAccessToken": "$(GithubPersonalAccessToken)"
+                }' > appsettings.json
+                
+          - task: CmdLine@2
+            displayName: 'cdktf deploy'
+            inputs:
+              script: |
+                cd Pipelines/PipelinesStack
+                dotnet build
+                npm ci
+                npm run deploy -- --auto-approve
+            
+            env:
+              ARM_CLIENT_ID: $(appId)
+              ARM_CLIENT_SECRET: $(password)
+              ARM_TENANT_ID: $(tenant)
+              # TODO: make this dynamic/variable
+              ARM_SUBSCRIPTION_ID: "c6b57d84-a545-465b-bf2f-037b6f4480a9"
+
+        
                 
                 

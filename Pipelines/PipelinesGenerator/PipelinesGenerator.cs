@@ -23,6 +23,7 @@ public class PipelinesGenerator
         var pipelineRoot = PipelineRoot.Create(path);
         var serializer = new SerializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .DisableAliases()
             .Build();
         return serializer.Serialize(pipelineRoot);
     }

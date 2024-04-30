@@ -1,3 +1,5 @@
+using YamlDotNet.Serialization;
+
 public record struct PipelineTriggerBranches(
     List<string> Include
 );
@@ -16,10 +18,20 @@ record struct PipelineResources(
 );
 
 
-record struct PipelineStep(
-    string Task,
-    Dictionary<string, string> Inputs
-);
+record PipelineStep(string Task)
+{
+    public record CmdLine2 : PipelineStep
+    {
+        public CmdLine2(string script) : base("CmdLine@2")
+        {
+            Script = script;
+        }
+        
+        [YamlMember(Alias = "Hello", Description = "A Description", ScalarStyle = YamlDotNet.Core.ScalarStyle.Literal)]
+        public string Script { get; init; }
+    }
+
+};
 
 record struct PipelineJobPool(
     string VmImage
@@ -38,6 +50,8 @@ record struct PipelineStage(
     string? DependsOn,
     List<PipelineJob> Jobs
 );
+
+
 
 record struct PipelineRoot(
     PipelineTrigger Trigger,
@@ -74,16 +88,10 @@ record struct PipelineRoot(
                             new PipelineJobPool("ubuntu-latest"),
                             new List<PipelineStep>
                             {
-                                new PipelineStep(
-                                    "CmdLine@2",
-                                    new Dictionary<string, string>
-                                    {
-                                        { "script", @"
+                                new PipelineStep.CmdLine2(@"
 echo ""Any build steps could go here.""
 ls -l
-" }
-                                    }
-                                )
+")
                             }
                         )
                     }
@@ -97,19 +105,13 @@ ls -l
                         new PipelineJob(
                             "Release",
                             "Release",
-                             new PipelineJobPool("ubuntu-latest"),
+                            new PipelineJobPool("ubuntu-latest"),
                             new List<PipelineStep>
                             {
-                                new PipelineStep(
-                                    "CmdLine@2",
-                                    new Dictionary<string, string>
-                                    {
-                                        { "script", @"
+                                new PipelineStep.CmdLine2(@"
 echo ""Any build steps could go here.""
 ls -l
-" }
-                                    }
-                                )
+")
                             }
                         )
                     }

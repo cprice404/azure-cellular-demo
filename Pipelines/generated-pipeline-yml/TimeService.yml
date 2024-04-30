@@ -14,28 +14,27 @@ stages:
   jobs:
   - job: Build
     displayName: Build
-    pool: &o0
+    pool:
       vmImage: ubuntu-latest
     steps:
-    - task: CmdLine@2
-      inputs:
-        script: >2
+    - # A Description
+      hello: |2
 
-          echo "Any build steps could go here."
-
-          ls -l
+        echo "Any build steps could go here."
+        ls -l
+      task: CmdLine@2
 - stage: Release
   displayName: Release
   dependsOn: Build
   jobs:
   - job: Release
     displayName: Release
-    pool: *o0
+    pool:
+      vmImage: ubuntu-latest
     steps:
-    - task: CmdLine@2
-      inputs:
-        script: >2
+    - # A Description
+      hello: |2
 
-          echo "Any build steps could go here."
-
-          ls -l
+        echo "Any build steps could go here."
+        ls -l
+      task: CmdLine@2

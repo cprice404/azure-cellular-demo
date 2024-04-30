@@ -21,10 +21,14 @@ record struct PipelineStep(
     Dictionary<string, string> Inputs
 );
 
+record struct PipelineJobPool(
+    string VmImage
+);
+
 record struct PipelineJob(
     string Job,
     string DisplayName,
-    string Pool,
+    PipelineJobPool Pool,
     List<PipelineStep> Steps
 );
 
@@ -67,7 +71,7 @@ record struct PipelineRoot(
                         new PipelineJob(
                             "Build",
                             "Build",
-                            "vmImage: ubuntu-latest",
+                            new PipelineJobPool("ubuntu-latest"),
                             new List<PipelineStep>
                             {
                                 new PipelineStep(
@@ -93,7 +97,7 @@ ls -l
                         new PipelineJob(
                             "Release",
                             "Release",
-                            "vmImage: ubuntu-latest",
+                             new PipelineJobPool("ubuntu-latest"),
                             new List<PipelineStep>
                             {
                                 new PipelineStep(

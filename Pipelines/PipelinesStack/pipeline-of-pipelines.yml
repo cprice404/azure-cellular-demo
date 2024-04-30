@@ -51,6 +51,8 @@ stages:
                 echo "TODO: need to commit modified yaml files"
                 git add Pipelines/generated-pipeline-yml
                 git status
+                git commit -a -m "[Automated Commit] Generated latest pipeline yml files"
+                git push
 
   - stage: DeployAllPipelines
     displayName: Deploy all Pipelines

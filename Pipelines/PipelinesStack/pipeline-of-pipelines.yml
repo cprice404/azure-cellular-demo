@@ -49,6 +49,7 @@ stages:
             inputs:
               script: |
                 echo "TODO: need to commit modified yaml files"
+                git add Pipelines/generated-pipeline-yml
                 git status
 
   - stage: DeployAllPipelines

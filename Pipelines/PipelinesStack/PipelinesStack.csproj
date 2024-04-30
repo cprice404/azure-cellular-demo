@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PipelinesGenerator\PipelinesGenerator.csproj" />
     <ProjectReference Include="vendor\cdktf\azuredevops\azuredevops.csproj" />
   </ItemGroup>
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using azuredevops.BuildDefinition;
 using azuredevops.Project;
 using azuredevops.Provider;
@@ -139,23 +140,51 @@ namespace PipelinesStack {
         //         new BuildDefinition(this, "CoreInfrastructurePipeline", pipelineConfig);
 
             var pipelineOfPipelinesDefinition = new BuildDefinition(this, "PipelineOfPipelines",
-                new BuildDefinitionConfig()
+                GeneratePipelineConfig(githubServiceEndpoint, project, "PipelineOfPipelines",
+                    "Pipelines/PipelinesStack/pipeline-of-pipelines.yml")
+                );
+
+            // var pipelineYmlFiles = Directory.GetFiles(Directory.GetParent(Directory.GetCurrentDirectory()).FullName);
+            // foreach (var pipelineYamlFile in pipelineYmlFiles)
+            // {
+            //     Console.WriteLine($"Need to generate pipeline for {pipelineYamlFile}");
+            // }
+            
+            var generatedPipelineYmlDir = Path.Join(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "generated-pipeline-yml/");
+
+            foreach (var component in ApplicationComponents.AllComponents)
+            {
+                var componentPipeline = new BuildDefinition(this, $"{component.PipelineName}Pipeline",
+                        GeneratePipelineConfig(githubServiceEndpoint, project, component.PipelineName,
+                        $"{generatedPipelineYmlDir}/${component.PipelineName}.yml")
+                );
+            }
+        }
+
+        private BuildDefinitionConfig GeneratePipelineConfig(
+            ServiceendpointGithub githubServiceEndpoint,
+            Project project,
+            String pipelineName,
+            String ymlPath
+        )
+        {
+            return new BuildDefinitionConfig()
+            {
+                Name = pipelineName,
+                Repository = new BuildDefinitionRepository()
                 {
-                    Name = "PipelineOfPipelines",
-                    Repository = new BuildDefinitionRepository()
-                    {
-                        RepoId = "cprice404/azure-cellular-demo",
-                        RepoType = "GitHub",
-                        YmlPath = "Pipelines/PipelinesStack/pipeline-of-pipelines.yml",
-                        ServiceConnectionId = githubServiceEndpoint.Id,
-                        BranchName = "refs/heads/main"
-                    },
-                    ProjectId = project.Id,
-                    CiTrigger = new BuildDefinitionCiTrigger()
-                    {
-                        UseYaml = true
-                    }
-                });
+                    RepoId = "cprice404/azure-cellular-demo",
+                    RepoType = "GitHub",
+                    YmlPath = ymlPath,
+                    ServiceConnectionId = githubServiceEndpoint.Id,
+                    BranchName = "refs/heads/main"
+                },
+                ProjectId = project.Id,
+                CiTrigger = new BuildDefinitionCiTrigger()
+                {
+                    UseYaml = true
+                }
+            };
         }
     }
 }

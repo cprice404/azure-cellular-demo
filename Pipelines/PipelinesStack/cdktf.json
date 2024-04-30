@@ -4,7 +4,6 @@
   "projectId": "ba6a650a-3e36-4789-a901-6dc66871c7d7",
   "sendCrashReports": "true",
   "terraformProviders": [
-    "microsoft/azuredevops@~> 1.0"
   ],
   "terraformModules": [],
   "context": {}

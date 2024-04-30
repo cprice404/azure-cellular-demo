@@ -27,10 +27,17 @@ record PipelineStep
     
     public record CmdLine2 : PipelineStep
     {
-        public CmdLine2(string script) : base("CmdLine@2") { Script = script; }
+        public record CmdLine2Inputs
+        {
+            public CmdLine2Inputs(string script) { Script = script; }
+            
+            [YamlMember(ScalarStyle = YamlDotNet.Core.ScalarStyle.Literal)]
+            public string Script { get; init; }
+        }
+        public CmdLine2(string script) : base("CmdLine@2") { Inputs = new CmdLine2Inputs(script); }
         
-        [YamlMember(Order = 1, ScalarStyle = YamlDotNet.Core.ScalarStyle.Literal)]
-        public string Script { get; init; }
+        [YamlMember(Order = 1)]
+        public CmdLine2Inputs Inputs { get; init; }
     }
 };
 

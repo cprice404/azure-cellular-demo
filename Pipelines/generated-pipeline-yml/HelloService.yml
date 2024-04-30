@@ -14,7 +14,8 @@ stages:
   jobs:
   - job: Build
     displayName: Build
-    pool: 'vmImage: ubuntu-latest'
+    pool: &o0
+      vmImage: ubuntu-latest
     steps:
     - task: CmdLine@2
       inputs:
@@ -29,7 +30,7 @@ stages:
   jobs:
   - job: Release
     displayName: Release
-    pool: 'vmImage: ubuntu-latest'
+    pool: *o0
     steps:
     - task: CmdLine@2
       inputs:

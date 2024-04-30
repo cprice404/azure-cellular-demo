@@ -25,7 +25,7 @@ stages:
           ls -l
 - stage: Release
   displayName: Release
-  dependsOn: 
+  dependsOn: Build
   jobs:
   - job: Release
     displayName: Release

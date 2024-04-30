@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "azuredevops", "PipelinesSta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipelinesGenerator", "PipelinesGenerator\PipelinesGenerator.csproj", "{DD142D15-EE78-47B3-B0E4-F28B6FE6508A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CellRegistry", "..\libraries\CellRegistry\CellRegistry\CellRegistry.csproj", "{44E03E58-8FD8-43D1-BA20-68494AC917AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{DD142D15-EE78-47B3-B0E4-F28B6FE6508A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD142D15-EE78-47B3-B0E4-F28B6FE6508A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD142D15-EE78-47B3-B0E4-F28B6FE6508A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44E03E58-8FD8-43D1-BA20-68494AC917AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44E03E58-8FD8-43D1-BA20-68494AC917AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44E03E58-8FD8-43D1-BA20-68494AC917AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44E03E58-8FD8-43D1-BA20-68494AC917AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -16,4 +16,5 @@ NOTES:
 * Need to create a variable group to populate appsettings.json; first run after that, you will have to approve permissions for it in the console
 * Need to create a service principal because terraform won't work using azure CLI login via a user account
 * SUPER IMPORTANT to use the right "directory" when setting stuff up in devops console so you can connect service principals
+* Add the service principal as a user in azure devops org
 * env var AZDO_PERSONAL_ACCESS_TOKEN for local deploy of POP?

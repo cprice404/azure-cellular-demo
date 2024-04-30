@@ -7,3 +7,34 @@ trigger:
     - /application/HelloService/**
 resources:
 - repo: self
+stages:
+- stage: Build
+  displayName: Build
+  dependsOn: 
+  jobs:
+  - job: Build
+    displayName: Build
+    pool: 'vmImage: ubuntu-latest'
+    steps:
+    - task: CmdLine@2
+      inputs:
+        script: >2
+
+          echo "Any build steps could go here."
+
+          ls -l
+- stage: Release
+  displayName: Release
+  dependsOn: 
+  jobs:
+  - job: Release
+    displayName: Release
+    pool: 'vmImage: ubuntu-latest'
+    steps:
+    - task: CmdLine@2
+      inputs:
+        script: >2
+
+          echo "Any build steps could go here."
+
+          ls -l

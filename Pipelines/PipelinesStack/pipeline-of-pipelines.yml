@@ -24,8 +24,10 @@ stages:
         pool:
           vmImage: $(vmImageName)
         steps:
-          - script: |
-              echo "Any build steps could go here."
+          - task: CmdLine@2
+            inputs:
+              script: |
+                echo "Any build steps could go here."
 
   - stage: GeneratePipelineYml
     displayName: Generate Pipeline Yml

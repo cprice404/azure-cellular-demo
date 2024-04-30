@@ -150,13 +150,12 @@ namespace PipelinesStack {
             //     Console.WriteLine($"Need to generate pipeline for {pipelineYamlFile}");
             // }
             
-            var generatedPipelineYmlDir = Path.Join(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "generated-pipeline-yml/");
 
             foreach (var component in ApplicationComponents.AllComponents)
             {
                 var componentPipeline = new BuildDefinition(this, $"{component.PipelineName}Pipeline",
                         GeneratePipelineConfig(githubServiceEndpoint, project, component.PipelineName,
-                        $"{generatedPipelineYmlDir}/${component.PipelineName}.yml")
+                        $"Pipelines/generated-pipeline-yml/{component.PipelineName}.yml")
                 );
             }
         }

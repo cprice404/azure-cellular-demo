@@ -1,4 +1,5 @@
 appsettings.json
+appsettings.json.OLD
 node_modules
 .gen
 cdktf.out

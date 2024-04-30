@@ -18,14 +18,37 @@ public class PipelinesGenerator
     }
     
     
-    private string GeneratePipelineYml(string path)
+    private string GeneratePipelineYml(string componentDirectory)
     {
-        var pipelineRoot = PipelineRoot.Create(path);
+        var pipelineRoot = CreatePipeline(componentDirectory);
         var serializer = new SerializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
             .DisableAliases()
             .Build();
         return serializer.Serialize(pipelineRoot);
+    }
+
+    private PipelineRoot CreatePipeline(string componentDirectory)
+    {
+        return new PipelineRoot(
+            new PipelineTrigger(
+                new PipelineTriggerBranches(
+                    new List<string> { "main" }
+                ),
+                new PipelineTriggerPaths(
+                    new List<string> { $"/{componentDirectory}/**" }
+                )
+            ),
+            new List<PipelineResources>
+            {
+                new PipelineResources("self")
+            },
+            new List<PipelineStage>
+            {
+                BuildStages.Build(),
+                BuildStages.Release()
+            }
+        );
     }
     /*
      * trigger:

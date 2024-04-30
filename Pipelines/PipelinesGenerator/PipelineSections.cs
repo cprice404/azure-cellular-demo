@@ -18,19 +18,20 @@ record struct PipelineResources(
 );
 
 
-record PipelineStep(string Task)
+record PipelineStep
 {
+    public PipelineStep(string task) { Task = task; }
+    
+    [YamlMember(Order = 0)]
+    public string Task { get; init; }
+    
     public record CmdLine2 : PipelineStep
     {
-        public CmdLine2(string script) : base("CmdLine@2")
-        {
-            Script = script;
-        }
+        public CmdLine2(string script) : base("CmdLine@2") { Script = script; }
         
-        [YamlMember(Alias = "Hello", Description = "A Description", ScalarStyle = YamlDotNet.Core.ScalarStyle.Literal)]
+        [YamlMember(Order = 1, ScalarStyle = YamlDotNet.Core.ScalarStyle.Literal)]
         public string Script { get; init; }
     }
-
 };
 
 record struct PipelineJobPool(

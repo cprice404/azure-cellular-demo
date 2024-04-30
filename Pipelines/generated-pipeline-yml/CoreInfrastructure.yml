@@ -17,12 +17,11 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - # A Description
-      hello: |2
+    - task: CmdLine@2
+      script: |2
 
         echo "Any build steps could go here."
         ls -l
-      task: CmdLine@2
 - stage: Release
   displayName: Release
   dependsOn: Build
@@ -32,9 +31,8 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - # A Description
-      hello: |2
+    - task: CmdLine@2
+      script: |2
 
         echo "Any build steps could go here."
         ls -l
-      task: CmdLine@2

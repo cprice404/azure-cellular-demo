@@ -43,6 +43,7 @@ stages:
               script: |
                 cd Pipelines/PipelinesGenerator
                 dotnet run
+                git status
           - task: CmdLine@2
             displayName: 'Commit modified pipeline yaml files'
             inputs:

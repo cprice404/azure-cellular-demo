@@ -37,6 +37,9 @@ stages:
         pool:
           vmImage: $(vmImageName)
         steps:
+          - checkout: self
+            persistCredentials: true
+            clean: true
           - task: CmdLine@2
             displayName: 'Generate Pipeline yaml files'
             inputs:

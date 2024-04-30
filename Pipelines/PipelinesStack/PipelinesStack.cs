@@ -80,63 +80,63 @@ namespace PipelinesStack {
                     githubServiceEndpointConfig);
 
 
-            var pipelineRepository = new BuildDefinitionRepository();
-            pipelineRepository.RepoId = "cprice404/azure-cellular-demo";
-            pipelineRepository.RepoType = "GitHub";
-            pipelineRepository.YmlPath = "Pipelines/PipelinesStack/sample-pipeline.yml";
-            pipelineRepository.ServiceConnectionId = githubServiceEndpoint.Id;
-            pipelineRepository.BranchName = "refs/heads/main";
-
-            var pipelineVariables = new List<BuildDefinitionVariable>();
-            pipelineVariables.Add(new BuildDefinitionVariable
-            {
-                Name = "FOO",
-                Value = "FOOOOOOOOO!"
-            });
-            pipelineVariables.Add(new BuildDefinitionVariable
-            {
-                Name = "BAR",
-                Value = "BAAAAAAAAAAR!"
-            });
-
-            // var pipelineCiTriggerOverride = new azuredevops.BuildDefinition.BuildDefinitionCiTriggerOverride();
-            // pipelineCiTriggerOverride.BranchFilter =
-            //     new List<azuredevops.BuildDefinition.BuildDefinitionCiTriggerOverrideBranchFilter>().ToArray();
-
-            var pipelineCiTrigger = new BuildDefinitionCiTrigger();
-            pipelineCiTrigger.UseYaml = true;
-            // pipelineCiTrigger.Override = new BuildDefinitionCiTriggerOverride
-            // {
-            //     PathFilter = new List<BuildDefinitionCiTriggerOverridePathFilter>
-            //     {
-            //         new()
-            //         {
-            //             Include = new[] {"/application/Core/**"} 
-            //         }
-            //     }.ToArray()
-            // };
-        // pipelineCiTrigger.Override = pipelineCiTriggerOverride; 
-
-            // var pipelinePullRequestTriggerForks =
-            //     new azuredevops.BuildDefinition.BuildDefinitionPullRequestTriggerForks();
-            // pipelinePullRequestTriggerForks.Enabled = false;
-            // pipelinePullRequestTriggerForks.ShareSecrets = false;
-            //
-            // var pipelinePullRequestTrigger = new azuredevops.BuildDefinition.BuildDefinitionPullRequestTrigger();
-            // pipelinePullRequestTrigger.Forks = pipelinePullRequestTriggerForks;
-                
-            
-            var pipelineConfig = new BuildDefinitionConfig();
-            pipelineConfig.Name = "CoreInfrastructure";
-            pipelineConfig.Repository = pipelineRepository;
-            pipelineConfig.ProjectId = project.Id;
-            pipelineConfig.Variable = pipelineVariables.ToArray();
-            pipelineConfig.CiTrigger = pipelineCiTrigger;
-            // pipelineConfig.Path = "\\application\\Core";
-            
-            // pipelineConfig.PullRequestTrigger = pipelinePullRequestTrigger;
-            var pipelineDefinition =
-                new BuildDefinition(this, "CoreInfrastructurePipeline", pipelineConfig);
+        //     var pipelineRepository = new BuildDefinitionRepository();
+        //     pipelineRepository.RepoId = "cprice404/azure-cellular-demo";
+        //     pipelineRepository.RepoType = "GitHub";
+        //     pipelineRepository.YmlPath = "Pipelines/PipelinesStack/sample-pipeline.yml";
+        //     pipelineRepository.ServiceConnectionId = githubServiceEndpoint.Id;
+        //     pipelineRepository.BranchName = "refs/heads/main";
+        //
+        //     var pipelineVariables = new List<BuildDefinitionVariable>();
+        //     pipelineVariables.Add(new BuildDefinitionVariable
+        //     {
+        //         Name = "FOO",
+        //         Value = "FOOOOOOOOO!"
+        //     });
+        //     pipelineVariables.Add(new BuildDefinitionVariable
+        //     {
+        //         Name = "BAR",
+        //         Value = "BAAAAAAAAAAR!"
+        //     });
+        //
+        //     // var pipelineCiTriggerOverride = new azuredevops.BuildDefinition.BuildDefinitionCiTriggerOverride();
+        //     // pipelineCiTriggerOverride.BranchFilter =
+        //     //     new List<azuredevops.BuildDefinition.BuildDefinitionCiTriggerOverrideBranchFilter>().ToArray();
+        //
+        //     var pipelineCiTrigger = new BuildDefinitionCiTrigger();
+        //     pipelineCiTrigger.UseYaml = true;
+        //     // pipelineCiTrigger.Override = new BuildDefinitionCiTriggerOverride
+        //     // {
+        //     //     PathFilter = new List<BuildDefinitionCiTriggerOverridePathFilter>
+        //     //     {
+        //     //         new()
+        //     //         {
+        //     //             Include = new[] {"/application/Core/**"} 
+        //     //         }
+        //     //     }.ToArray()
+        //     // };
+        // // pipelineCiTrigger.Override = pipelineCiTriggerOverride; 
+        //
+        //     // var pipelinePullRequestTriggerForks =
+        //     //     new azuredevops.BuildDefinition.BuildDefinitionPullRequestTriggerForks();
+        //     // pipelinePullRequestTriggerForks.Enabled = false;
+        //     // pipelinePullRequestTriggerForks.ShareSecrets = false;
+        //     //
+        //     // var pipelinePullRequestTrigger = new azuredevops.BuildDefinition.BuildDefinitionPullRequestTrigger();
+        //     // pipelinePullRequestTrigger.Forks = pipelinePullRequestTriggerForks;
+        //         
+        //     
+        //     var pipelineConfig = new BuildDefinitionConfig();
+        //     pipelineConfig.Name = "CoreInfrastructure";
+        //     pipelineConfig.Repository = pipelineRepository;
+        //     pipelineConfig.ProjectId = project.Id;
+        //     pipelineConfig.Variable = pipelineVariables.ToArray();
+        //     pipelineConfig.CiTrigger = pipelineCiTrigger;
+        //     // pipelineConfig.Path = "\\application\\Core";
+        //     
+        //     // pipelineConfig.PullRequestTrigger = pipelinePullRequestTrigger;
+        //     var pipelineDefinition =
+        //         new BuildDefinition(this, "CoreInfrastructurePipeline", pipelineConfig);
 
             var pipelineOfPipelinesDefinition = new BuildDefinition(this, "PipelineOfPipelines",
                 new BuildDefinitionConfig()

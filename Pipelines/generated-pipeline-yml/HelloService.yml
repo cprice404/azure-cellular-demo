@@ -1,1 +1,9 @@
-Hello World!
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - /application/HelloService/**
+resources:
+- repo: self

@@ -54,7 +54,7 @@ stages:
                 git config --global user.email "bot@azure-cellular-demo"
                 git config --global user.name "CICD Bot"
                 git commit -a -m "[Automated Commit] Generated latest pipeline yml files"
-                git push
+                git push --dry-run origin HEAD:main
 
   - stage: DeployAllPipelines
     displayName: Deploy all Pipelines

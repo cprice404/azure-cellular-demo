@@ -171,6 +171,41 @@ ls -l
         public abstract List<PipelineStep> ToPipelineSteps(Cell cell);
     }
 
+    public abstract class PipelineBakeStage
+    {
+        public class MonitorAlertsStage : PipelineBakeStage
+        {
+            public override PipelineStage ToPipelineStage(string stageName, string displayName, string? dependsOn, CellWave cellWave)
+            {
+                return new PipelineStage(
+                    stageName,
+                    displayName,
+                    dependsOn,
+                    new List<PipelineJob>
+                    {
+                        new(
+                            stageName,
+                            displayName,
+                            new PipelineJobPool("ubuntu-latest"),
+                            new List<PipelineStep>
+                            {
+                                new PipelineStep.CmdLine2("Bake", $@"
+echo ""(Cells: {String.Join(", ", cellWave.Cells)}) This step will execute a bake period to monitor the deployment from the previous wave and make sure there are no issues. It would typically involve a loop where we check all relevant alerts, sleep for a few minutes, and repeat, until a certain amount of time has transpired with no errors surfacing.""
+ls -l
+")
+                            }
+                        )
+                    }
+                );
+            }
+        }
+        
+        private PipelineBakeStage() { }
+        
+        public abstract PipelineStage ToPipelineStage(string stageName, string displayName, string? dependsOn, CellWave cellWave);
+    }
+
+    
     public record struct PipelineDefinition(
         PipelineBuildStage BuildStage,
         PipelineReleaseStage ReleaseStage,
@@ -204,7 +239,9 @@ ls -l
                     cellJobs
                 );
                 stages.Add(cellDeployStage);
-                prevStageName = stageName;
+                var bakeStageName = $"BakeWave{nextWaveIndex}";
+                stages.Add(ApplicationComponents.Pipeline.Bake.MonitorAlerts().ToPipelineStage(bakeStageName, $"Bake (Wave {nextWaveIndex})", prevStageName, cellDeployWave));
+                prevStageName = bakeStageName;
             }
 
             return stages;

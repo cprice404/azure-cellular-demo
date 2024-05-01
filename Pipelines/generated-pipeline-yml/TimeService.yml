@@ -70,9 +70,25 @@ stages:
           echo "(alpha) Here we would run arbitrary shell commands passed to the constructor, e.g. `application/TimeService/scripts/store-loadbalancer-address-to-appconfig.sh`."
           ls -l
       displayName: Store AppConfig
+- stage: BakeWave1
+  displayName: Bake (Wave 1)
+  dependsOn: ReleaseStage
+  jobs:
+  - job: BakeWave1
+    displayName: Bake (Wave 1)
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: CmdLine@2
+      inputs:
+        script: |2
+
+          echo "(Cells: Cell { SubscriptionId = fake-alpha-subscription-id, CellName = alpha, CellType = PREPROD, BackendStorageContainer = AzureBackendStorageContainer { ResourceGroupName = cdktf-state, StorageAccountName = cdktfstate90210, ContainerName = cdktf-state }, Location = westus2 }) This step will execute a bake period to monitor the deployment from the previous wave and make sure there are no issues. It would typically involve a loop where we check all relevant alerts, sleep for a few minutes, and repeat, until a certain amount of time has transpired with no errors surfacing."
+          ls -l
+      displayName: Bake
 - stage: CellDeployWave2
   displayName: Deploy (Wave 2)
-  dependsOn: CellDeployWave1
+  dependsOn: BakeWave1
   jobs:
   - job: CellDeploywestus3_1
     displayName: westus3_1
@@ -126,9 +142,25 @@ stages:
           echo "(southcentralus_1) Here we would run arbitrary shell commands passed to the constructor, e.g. `application/TimeService/scripts/store-loadbalancer-address-to-appconfig.sh`."
           ls -l
       displayName: Store AppConfig
+- stage: BakeWave2
+  displayName: Bake (Wave 2)
+  dependsOn: BakeWave1
+  jobs:
+  - job: BakeWave2
+    displayName: Bake (Wave 2)
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: CmdLine@2
+      inputs:
+        script: |2
+
+          echo "(Cells: Cell { SubscriptionId = fake-westus3-1-subscription-id, CellName = westus3_1, CellType = PROD, BackendStorageContainer = AzureBackendStorageContainer { ResourceGroupName = cdktf-state, StorageAccountName = cdktfstate90214, ContainerName = cdktf-state }, Location = westus3 }, Cell { SubscriptionId = fake-southcentralus-1-subscription-id, CellName = southcentralus_1, CellType = PROD, BackendStorageContainer = AzureBackendStorageContainer { ResourceGroupName = cdktf-state, StorageAccountName = cdktfstate90213, ContainerName = cdktf-state }, Location = southcentralus }) This step will execute a bake period to monitor the deployment from the previous wave and make sure there are no issues. It would typically involve a loop where we check all relevant alerts, sleep for a few minutes, and repeat, until a certain amount of time has transpired with no errors surfacing."
+          ls -l
+      displayName: Bake
 - stage: CellDeployWave3
   displayName: Deploy (Wave 3)
-  dependsOn: CellDeployWave2
+  dependsOn: BakeWave2
   jobs:
   - job: CellDeploywestus2_1
     displayName: westus2_1
@@ -182,3 +214,19 @@ stages:
           echo "(eastus1_1) Here we would run arbitrary shell commands passed to the constructor, e.g. `application/TimeService/scripts/store-loadbalancer-address-to-appconfig.sh`."
           ls -l
       displayName: Store AppConfig
+- stage: BakeWave3
+  displayName: Bake (Wave 3)
+  dependsOn: BakeWave2
+  jobs:
+  - job: BakeWave3
+    displayName: Bake (Wave 3)
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: CmdLine@2
+      inputs:
+        script: |2
+
+          echo "(Cells: Cell { SubscriptionId = fake-westus2-1-subscription-id, CellName = westus2_1, CellType = PROD, BackendStorageContainer = AzureBackendStorageContainer { ResourceGroupName = cdktf-state, StorageAccountName = cdktfstate90211, ContainerName = cdktf-state }, Location = westus2 }, Cell { SubscriptionId = fake-eastus1-1-subscription-id, CellName = eastus1_1, CellType = PROD, BackendStorageContainer = AzureBackendStorageContainer { ResourceGroupName = cdktf-state, StorageAccountName = cdktfstate90212, ContainerName = cdktf-state }, Location = eastus1 }) This step will execute a bake period to monitor the deployment from the previous wave and make sure there are no issues. It would typically involve a loop where we check all relevant alerts, sleep for a few minutes, and repeat, until a certain amount of time has transpired with no errors surfacing."
+          ls -l
+      displayName: Bake

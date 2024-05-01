@@ -29,6 +29,13 @@ public class ApplicationComponents
             private CellDeploy() {}
         }
 
+        public record Bake
+        {
+            public static ApplicationComponent.PipelineBakeStage MonitorAlerts() => new ApplicationComponent.PipelineBakeStage.MonitorAlertsStage();
+            
+            private Bake() {}
+        }
+
         private Pipeline() {}
     }
     

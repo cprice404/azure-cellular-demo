@@ -55,7 +55,7 @@ stages:
           ls -l
 - stage: CellDeployWave2
   displayName: Deploy (Wave 2)
-  dependsOn: ReleaseStage
+  dependsOn: CellDeployWave1
   jobs:
   - job: CellDeploywestus3_1
     displayName: westus3_1
@@ -81,7 +81,7 @@ stages:
           ls -l
 - stage: CellDeployWave3
   displayName: Deploy (Wave 3)
-  dependsOn: ReleaseStage
+  dependsOn: CellDeployWave2
   jobs:
   - job: CellDeploywestus2_1
     displayName: westus2_1

@@ -26,7 +26,7 @@ public record struct ApplicationComponent(
                             new PipelineJobPool("ubuntu-latest"),
                             new List<PipelineStep>
                             {
-                                new PipelineStep.CmdLine2(@"
+                                new PipelineStep.CmdLine2("make", @"
 echo ""This step would typically call 'make', but any build steps could go here.""
 ls -l
 ")
@@ -61,7 +61,7 @@ ls -l
                             new PipelineJobPool("ubuntu-latest"),
                             new List<PipelineStep>
                             {
-                                new PipelineStep.CmdLine2(@"
+                                new PipelineStep.CmdLine2("No-op", @"
 echo ""This project has no release artifacts; no-op.""
 ls -l
 ")
@@ -89,7 +89,7 @@ ls -l
                             new PipelineJobPool("ubuntu-latest"),
                             new List<PipelineStep>
                             {
-                                new PipelineStep.CmdLine2(@"
+                                new PipelineStep.CmdLine2("Push docker image", @"
 echo ""Here we would run commands to build and push a docker image to ACR; e.g. `docker build`, `acr login`, `docker push`.""
 ls -l
 ")
@@ -113,7 +113,7 @@ ls -l
             {
                 return new List<PipelineStep>
                 {
-                    new PipelineStep.CmdLine2($@"
+                    new PipelineStep.CmdLine2("cdktf deploy", $@"
 echo ""({cell.CellName}) Here we would run commands to deploy infrastructure via CDK for TerraForm.""
 ls -l
 ")
@@ -134,7 +134,7 @@ ls -l
             {
                 return new List<PipelineStep>
                 {
-                    new PipelineStep.CmdLine2($@"
+                    new PipelineStep.CmdLine2("kubectl apply", $@"
 echo ""({cell.CellName}) Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f {ManifestPath}`.""
 ls -l
 ")
@@ -145,18 +145,20 @@ ls -l
 
         public class ShellCommandStep : PipelineCellDeployStep
         {
-            public ShellCommandStep(string shellCommand)
+            public ShellCommandStep(string displayName, string shellCommand)
             {
+                DisplayName = displayName;
                 ShellCommand = shellCommand;
             }
 
+            public string DisplayName { get; set; }
             public string ShellCommand { get; set; }
-            
+
             public override List<PipelineStep> ToPipelineSteps(Cell cell)
             {
                 return new List<PipelineStep>
                 {
-                    new PipelineStep.CmdLine2($@"
+                    new PipelineStep.CmdLine2(DisplayName, $@"
 echo ""({cell.CellName}) Here we would run arbitrary shell commands passed to the constructor, e.g. `{ShellCommand}`.""
 ls -l
 ")

@@ -23,6 +23,7 @@ stages:
 
           echo "This step would typically call 'make', but any build steps could go here."
           ls -l
+      displayName: make
 - stage: ReleaseStage
   displayName: Release
   dependsOn: BuildStage
@@ -38,6 +39,7 @@ stages:
 
           echo "This project has no release artifacts; no-op."
           ls -l
+      displayName: No-op
 - stage: CellDeployWave1
   displayName: Deploy (Wave 1)
   dependsOn: ReleaseStage
@@ -53,6 +55,7 @@ stages:
 
           echo "(alpha) Here we would run commands to deploy infrastructure via CDK for TerraForm."
           ls -l
+      displayName: cdktf deploy
 - stage: CellDeployWave2
   displayName: Deploy (Wave 2)
   dependsOn: CellDeployWave1
@@ -68,6 +71,7 @@ stages:
 
           echo "(westus3_1) Here we would run commands to deploy infrastructure via CDK for TerraForm."
           ls -l
+      displayName: cdktf deploy
   - job: CellDeploysouthcentralus_1
     displayName: southcentralus_1
     pool:
@@ -79,6 +83,7 @@ stages:
 
           echo "(southcentralus_1) Here we would run commands to deploy infrastructure via CDK for TerraForm."
           ls -l
+      displayName: cdktf deploy
 - stage: CellDeployWave3
   displayName: Deploy (Wave 3)
   dependsOn: CellDeployWave2
@@ -94,6 +99,7 @@ stages:
 
           echo "(westus2_1) Here we would run commands to deploy infrastructure via CDK for TerraForm."
           ls -l
+      displayName: cdktf deploy
   - job: CellDeployeastus1_1
     displayName: eastus1_1
     pool:
@@ -105,3 +111,4 @@ stages:
 
           echo "(eastus1_1) Here we would run commands to deploy infrastructure via CDK for TerraForm."
           ls -l
+      displayName: cdktf deploy

@@ -24,7 +24,7 @@ public class ApplicationComponents
         {
             public static ApplicationComponent.PipelineCellDeployStep CdkTfDeploy() => new ApplicationComponent.PipelineCellDeployStep.CdkTfDeployStep();
             public static ApplicationComponent.PipelineCellDeployStep AksApplyManifest(String manifestPath) => new ApplicationComponent.PipelineCellDeployStep.AksApplyManifestStep(manifestPath);
-            public static ApplicationComponent.PipelineCellDeployStep ShellCmd(String shellCommand) => new ApplicationComponent.PipelineCellDeployStep.ShellCommandStep(shellCommand);
+            public static ApplicationComponent.PipelineCellDeployStep ShellCmd(String displayName, String shellCommand) => new ApplicationComponent.PipelineCellDeployStep.ShellCommandStep(displayName, shellCommand);
             
             private CellDeploy() {}
         }
@@ -51,7 +51,7 @@ public class ApplicationComponents
             {
                 Pipeline.CellDeploy.AksApplyManifest("application/TimeService/k8s/deployment.yml"),
                 Pipeline.CellDeploy.AksApplyManifest("application/TimeService/k8s/service.yml"),
-                Pipeline.CellDeploy.ShellCmd("application/TimeService/scripts/store-loadbalancer-address-to-appconfig.sh"),
+                Pipeline.CellDeploy.ShellCmd("Store AppConfig", "application/TimeService/scripts/store-loadbalancer-address-to-appconfig.sh"),
             }
         }),
         new ApplicationComponent("HelloService", "application/HelloService", new ApplicationComponent.PipelineDefinition

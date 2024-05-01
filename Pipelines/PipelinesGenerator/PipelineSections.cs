@@ -20,10 +20,16 @@ public record struct PipelineResources(
 
 public record PipelineStep
 {
-    public PipelineStep(string task) { Task = task; }
+    public PipelineStep(string task, string displayName) {
+        Task = task;
+        DisplayName = displayName;
+    }
     
     [YamlMember(Order = 0)]
     public string Task { get; init; }
+    
+    [YamlMember(Order = 1)]
+    public string DisplayName { get; init; }
     
     public record CmdLine2 : PipelineStep
     {
@@ -34,7 +40,7 @@ public record PipelineStep
             [YamlMember(ScalarStyle = YamlDotNet.Core.ScalarStyle.Literal)]
             public string Script { get; init; }
         }
-        public CmdLine2(string script) : base("CmdLine@2") { Inputs = new CmdLine2Inputs(script); }
+        public CmdLine2(string displayName, string script) : base( "CmdLine@2", displayName) { Inputs = new CmdLine2Inputs(script); }
         
         [YamlMember(Order = 1)]
         public CmdLine2Inputs Inputs { get; init; }

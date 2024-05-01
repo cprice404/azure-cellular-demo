@@ -23,6 +23,7 @@ stages:
 
           echo "This step would typically call 'make', but any build steps could go here."
           ls -l
+      displayName: make
 - stage: ReleaseStage
   displayName: Release
   dependsOn: BuildStage
@@ -38,6 +39,7 @@ stages:
 
           echo "Here we would run commands to build and push a docker image to ACR; e.g. `docker build`, `acr login`, `docker push`."
           ls -l
+      displayName: Push docker image
 - stage: CellDeployWave1
   displayName: Deploy (Wave 1)
   dependsOn: ReleaseStage
@@ -53,18 +55,21 @@ stages:
 
           echo "(alpha) Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f application/TimeService/k8s/deployment.yml`."
           ls -l
+      displayName: kubectl apply
     - task: CmdLine@2
       inputs:
         script: |2
 
           echo "(alpha) Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f application/TimeService/k8s/service.yml`."
           ls -l
+      displayName: kubectl apply
     - task: CmdLine@2
       inputs:
         script: |2
 
           echo "(alpha) Here we would run arbitrary shell commands passed to the constructor, e.g. `application/TimeService/scripts/store-loadbalancer-address-to-appconfig.sh`."
           ls -l
+      displayName: Store AppConfig
 - stage: CellDeployWave2
   displayName: Deploy (Wave 2)
   dependsOn: CellDeployWave1
@@ -80,18 +85,21 @@ stages:
 
           echo "(westus3_1) Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f application/TimeService/k8s/deployment.yml`."
           ls -l
+      displayName: kubectl apply
     - task: CmdLine@2
       inputs:
         script: |2
 
           echo "(westus3_1) Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f application/TimeService/k8s/service.yml`."
           ls -l
+      displayName: kubectl apply
     - task: CmdLine@2
       inputs:
         script: |2
 
           echo "(westus3_1) Here we would run arbitrary shell commands passed to the constructor, e.g. `application/TimeService/scripts/store-loadbalancer-address-to-appconfig.sh`."
           ls -l
+      displayName: Store AppConfig
   - job: CellDeploysouthcentralus_1
     displayName: southcentralus_1
     pool:
@@ -103,18 +111,21 @@ stages:
 
           echo "(southcentralus_1) Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f application/TimeService/k8s/deployment.yml`."
           ls -l
+      displayName: kubectl apply
     - task: CmdLine@2
       inputs:
         script: |2
 
           echo "(southcentralus_1) Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f application/TimeService/k8s/service.yml`."
           ls -l
+      displayName: kubectl apply
     - task: CmdLine@2
       inputs:
         script: |2
 
           echo "(southcentralus_1) Here we would run arbitrary shell commands passed to the constructor, e.g. `application/TimeService/scripts/store-loadbalancer-address-to-appconfig.sh`."
           ls -l
+      displayName: Store AppConfig
 - stage: CellDeployWave3
   displayName: Deploy (Wave 3)
   dependsOn: CellDeployWave2
@@ -130,18 +141,21 @@ stages:
 
           echo "(westus2_1) Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f application/TimeService/k8s/deployment.yml`."
           ls -l
+      displayName: kubectl apply
     - task: CmdLine@2
       inputs:
         script: |2
 
           echo "(westus2_1) Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f application/TimeService/k8s/service.yml`."
           ls -l
+      displayName: kubectl apply
     - task: CmdLine@2
       inputs:
         script: |2
 
           echo "(westus2_1) Here we would run arbitrary shell commands passed to the constructor, e.g. `application/TimeService/scripts/store-loadbalancer-address-to-appconfig.sh`."
           ls -l
+      displayName: Store AppConfig
   - job: CellDeployeastus1_1
     displayName: eastus1_1
     pool:
@@ -153,15 +167,18 @@ stages:
 
           echo "(eastus1_1) Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f application/TimeService/k8s/deployment.yml`."
           ls -l
+      displayName: kubectl apply
     - task: CmdLine@2
       inputs:
         script: |2
 
           echo "(eastus1_1) Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f application/TimeService/k8s/service.yml`."
           ls -l
+      displayName: kubectl apply
     - task: CmdLine@2
       inputs:
         script: |2
 
           echo "(eastus1_1) Here we would run arbitrary shell commands passed to the constructor, e.g. `application/TimeService/scripts/store-loadbalancer-address-to-appconfig.sh`."
           ls -l
+      displayName: Store AppConfig

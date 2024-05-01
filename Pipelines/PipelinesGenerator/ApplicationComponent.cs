@@ -103,114 +103,74 @@ ls -l
         public abstract PipelineStage ToPipelineStage(string stageName, string displayName, string? dependsOn);
     }
 
-    public abstract class PipelineCellDeployStage
+    public abstract class PipelineCellDeployStep
     {
-        public class CdkTfDeployStage : PipelineCellDeployStage
+        public class CdkTfDeployStep : PipelineCellDeployStep
         {
-            public override PipelineStage ToPipelineStage(string stageName, string dependsOn)
+            public override List<PipelineStep> ToPipelineSteps()
             {
-                return new PipelineStage(
-                    stageName,
-                    "cdktf deploy",
-                    dependsOn,
-                    new List<PipelineJob>
-                    {
-                        new(
-                            stageName,
-                            "cdktf deploy",
-                            new PipelineJobPool("ubuntu-latest"),
-                            new List<PipelineStep>
-                            {
-                                new PipelineStep.CmdLine2(@"
+                return new List<PipelineStep>
+                {
+                    new PipelineStep.CmdLine2(@"
 echo ""Here we would run commands to deploy infrastructure via CDK for TerraForm.""
 ls -l
 ")
-                            }
-                        )
-                    }
-                );
-
+                };
             }
         }
 
-        public class AksApplyManifestStage : PipelineCellDeployStage
+        public class AksApplyManifestStep : PipelineCellDeployStep
         {
-            public AksApplyManifestStage(string manifestPath)
+            public AksApplyManifestStep(string manifestPath)
             {
                 ManifestPath = manifestPath;
             }
 
             public string ManifestPath { get; set; }
             
-            public override PipelineStage ToPipelineStage(string stageName, string dependsOn)
+            public override List<PipelineStep> ToPipelineSteps()
             {
-                return new PipelineStage(
-                    stageName,
-                    "kubectl apply",
-                    dependsOn,
-                    new List<PipelineJob>
-                    {
-                        new(
-                            stageName,
-                            "kubectl apply",
-                            new PipelineJobPool("ubuntu-latest"),
-                            new List<PipelineStep>
-                            {
-                                new PipelineStep.CmdLine2($@"
+                return new List<PipelineStep>
+                {
+                    new PipelineStep.CmdLine2($@"
 echo ""Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f {ManifestPath}`.""
 ls -l
 ")
-                            }
-                        )
-                    }
-                );
+                };
+
             }
         }
 
-        public class ShellCommandStage : PipelineCellDeployStage
+        public class ShellCommandStep : PipelineCellDeployStep
         {
-            public ShellCommandStage(string shellCommand)
+            public ShellCommandStep(string shellCommand)
             {
                 ShellCommand = shellCommand;
             }
 
             public string ShellCommand { get; set; }
             
-            public override PipelineStage ToPipelineStage(string stageName, string dependsOn)
+            public override List<PipelineStep> ToPipelineSteps()
             {
-                return new PipelineStage(
-                    stageName,
-                    "Shell Command",
-                    dependsOn,
-                    new List<PipelineJob>
-                    {
-                        new(
-                            stageName,
-                            "Shell Command",
-                            new PipelineJobPool("ubuntu-latest"),
-                            new List<PipelineStep>
-                            {
-                                new PipelineStep.CmdLine2($@"
+                return new List<PipelineStep>
+                {
+                    new PipelineStep.CmdLine2($@"
 echo ""Here we would run arbitrary shell commands passed to the constructor, e.g. `{ShellCommand}`.""
 ls -l
 ")
-                            }
-                        )
-                    }
-                );
-
+                };
             }
         }
         
-        private PipelineCellDeployStage() { }
-        
-        public abstract PipelineStage ToPipelineStage(string stageName, string dependsOn);
+        private PipelineCellDeployStep() { }
+
+        public abstract List<PipelineStep> ToPipelineSteps();
     }
 
     public record struct PipelineDefinition(
         PipelineBuildStage BuildStage,
         PipelineReleaseStage ReleaseStage,
-        PipelineCellDeployStage[] CellDeployStages
+        PipelineCellDeployStep[] CellDeploySteps
     )
     {
         public List<PipelineStage> ToPipelineStages()
@@ -220,14 +180,28 @@ ls -l
             stages.Add(BuildStage.ToPipelineStage("BuildStage", "Build", null));
             stages.Add(ReleaseStage.ToPipelineStage("ReleaseStage", "Release", "BuildStage"));
             string prevStageName = "ReleaseStage";
-            int nextCellDeployStageIndex = 0;
-            foreach (var cellDeployStage in CellDeployStages)
-            {
-                nextCellDeployStageIndex++;
-                var stageName = $"CellDeployStage{nextCellDeployStageIndex}";
-                stages.Add(cellDeployStage.ToPipelineStage(stageName, prevStageName));
-                prevStageName = stageName;
-            }
+            // int nextCellDeployStageIndex = 0;
+            
+                // nextCellDeployStageIndex++;
+                // var stageName = $"CellDeployStage{nextCellDeployStageIndex}";
+                // stages.Add(cellDeploySteps.ToPipelineStage(stageName, prevStageName));
+                // prevStageName = stageName;
+            // }
+            var cellDeployStage = new PipelineStage(
+                "CellDeployStage",
+                "Deploy to Cells (Wave 1)",
+                prevStageName,
+                new List<PipelineJob>
+                {
+                    new(
+                        "CellDeployCell1",
+                        "Cell 1 Deploy",
+                        new PipelineJobPool("ubuntu-latest"),
+                        CellDeploySteps.SelectMany(s => s.ToPipelineSteps()).ToList()
+                    )
+                }
+            );
+            stages.Add(cellDeployStage);
             
             return stages;
         }

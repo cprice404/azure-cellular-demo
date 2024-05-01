@@ -38,12 +38,12 @@ stages:
 
           echo "This project has no release artifacts; no-op."
           ls -l
-- stage: CellDeployStage1
-  displayName: cdktf deploy
+- stage: CellDeployStage
+  displayName: Deploy to Cells (Wave 1)
   dependsOn: ReleaseStage
   jobs:
-  - job: CellDeployStage1
-    displayName: cdktf deploy
+  - job: CellDeployCell1
+    displayName: Cell 1 Deploy
     pool:
       vmImage: ubuntu-latest
     steps:

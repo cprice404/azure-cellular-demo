@@ -22,9 +22,9 @@ public class ApplicationComponents
 
         public record CellDeploy
         {
-            public static ApplicationComponent.PipelineCellDeployStage CdkTfDeploy() => new ApplicationComponent.PipelineCellDeployStage.CdkTfDeployStage();
-            public static ApplicationComponent.PipelineCellDeployStage AksApplyManifest(String manifestPath) => new ApplicationComponent.PipelineCellDeployStage.AksApplyManifestStage(manifestPath);
-            public static ApplicationComponent.PipelineCellDeployStage ShellCmd(String shellCommand) => new ApplicationComponent.PipelineCellDeployStage.ShellCommandStage(shellCommand);
+            public static ApplicationComponent.PipelineCellDeployStep CdkTfDeploy() => new ApplicationComponent.PipelineCellDeployStep.CdkTfDeployStep();
+            public static ApplicationComponent.PipelineCellDeployStep AksApplyManifest(String manifestPath) => new ApplicationComponent.PipelineCellDeployStep.AksApplyManifestStep(manifestPath);
+            public static ApplicationComponent.PipelineCellDeployStep ShellCmd(String shellCommand) => new ApplicationComponent.PipelineCellDeployStep.ShellCommandStep(shellCommand);
             
             private CellDeploy() {}
         }
@@ -38,7 +38,7 @@ public class ApplicationComponents
         {
             BuildStage = Pipeline.Build.Make(),
             ReleaseStage = Pipeline.Release.Noop(),
-            CellDeployStages = new[]
+            CellDeploySteps = new[]
             {
                 Pipeline.CellDeploy.CdkTfDeploy()
             }
@@ -47,7 +47,7 @@ public class ApplicationComponents
         {
             BuildStage = Pipeline.Build.Make(),
             ReleaseStage = Pipeline.Release.BuildAndPushAcrImage(),
-            CellDeployStages = new[]
+            CellDeploySteps = new[]
             {
                 Pipeline.CellDeploy.AksApplyManifest("application/TimeService/k8s/deployment.yml"),
                 Pipeline.CellDeploy.AksApplyManifest("application/TimeService/k8s/service.yml"),
@@ -58,7 +58,7 @@ public class ApplicationComponents
         {
             BuildStage = Pipeline.Build.Make(),
             ReleaseStage = Pipeline.Release.BuildAndPushAcrImage(),
-            CellDeployStages = new[]
+            CellDeploySteps = new[]
             {
                 Pipeline.CellDeploy.CdkTfDeploy()
             }

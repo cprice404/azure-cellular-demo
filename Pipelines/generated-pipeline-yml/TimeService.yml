@@ -38,12 +38,12 @@ stages:
 
           echo "Here we would run commands to build and push a docker image to ACR; e.g. `docker build`, `acr login`, `docker push`."
           ls -l
-- stage: CellDeployStage1
-  displayName: kubectl apply
+- stage: CellDeployStage
+  displayName: Deploy to Cells (Wave 1)
   dependsOn: ReleaseStage
   jobs:
-  - job: CellDeployStage1
-    displayName: kubectl apply
+  - job: CellDeployCell1
+    displayName: Cell 1 Deploy
     pool:
       vmImage: ubuntu-latest
     steps:
@@ -53,30 +53,12 @@ stages:
 
           echo "Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f application/TimeService/k8s/deployment.yml`."
           ls -l
-- stage: CellDeployStage2
-  displayName: kubectl apply
-  dependsOn: CellDeployStage1
-  jobs:
-  - job: CellDeployStage2
-    displayName: kubectl apply
-    pool:
-      vmImage: ubuntu-latest
-    steps:
     - task: CmdLine@2
       inputs:
         script: |2
 
           echo "Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f application/TimeService/k8s/service.yml`."
           ls -l
-- stage: CellDeployStage3
-  displayName: Shell Command
-  dependsOn: CellDeployStage2
-  jobs:
-  - job: CellDeployStage3
-    displayName: Shell Command
-    pool:
-      vmImage: ubuntu-latest
-    steps:
     - task: CmdLine@2
       inputs:
         script: |2

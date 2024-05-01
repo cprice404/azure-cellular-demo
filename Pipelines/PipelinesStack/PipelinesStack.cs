@@ -7,6 +7,7 @@ using azuredevops.Provider;
 using azuredevops.ServiceendpointGithub;
 using Constructs;
 using HashiCorp.Cdktf;
+using PipelinesGenerator;
 
 namespace PipelinesStack {
 

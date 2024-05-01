@@ -8,11 +8,11 @@ trigger:
 resources:
 - repo: self
 stages:
-- stage: Build
+- stage: BuildStage
   displayName: Build
   dependsOn: 
   jobs:
-  - job: Build
+  - job: BuildStage
     displayName: Build
     pool:
       vmImage: ubuntu-latest
@@ -21,13 +21,13 @@ stages:
       inputs:
         script: |2
 
-          echo "Any build steps could go here."
+          echo "This step would typically call 'make', but any build steps could go here."
           ls -l
-- stage: Release
+- stage: ReleaseStage
   displayName: Release
-  dependsOn: Build
+  dependsOn: BuildStage
   jobs:
-  - job: Release
+  - job: ReleaseStage
     displayName: Release
     pool:
       vmImage: ubuntu-latest
@@ -36,5 +36,50 @@ stages:
       inputs:
         script: |2
 
-          echo "Any build steps could go here."
+          echo "Here we would run commands to build and push a docker image to ACR; e.g. `docker build`, `acr login`, `docker push`."
+          ls -l
+- stage: CellDeployStage1
+  displayName: kubectl apply
+  dependsOn: ReleaseStage
+  jobs:
+  - job: CellDeployStage1
+    displayName: kubectl apply
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: CmdLine@2
+      inputs:
+        script: |2
+
+          echo "Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f application/TimeService/k8s/deployment.yml`."
+          ls -l
+- stage: CellDeployStage2
+  displayName: kubectl apply
+  dependsOn: CellDeployStage1
+  jobs:
+  - job: CellDeployStage2
+    displayName: kubectl apply
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: CmdLine@2
+      inputs:
+        script: |2
+
+          echo "Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f application/TimeService/k8s/service.yml`."
+          ls -l
+- stage: CellDeployStage3
+  displayName: Shell Command
+  dependsOn: CellDeployStage2
+  jobs:
+  - job: CellDeployStage3
+    displayName: Shell Command
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: CmdLine@2
+      inputs:
+        script: |2
+
+          echo "Here we would run arbitrary shell commands passed to the constructor, e.g. `application/TimeService/scripts/store-loadbalancer-address-to-appconfig.sh`."
           ls -l

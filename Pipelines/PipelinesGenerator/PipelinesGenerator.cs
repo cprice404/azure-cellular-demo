@@ -13,14 +13,14 @@ public class PipelinesGenerator
         {
             string pipelineYmlFile = Path.Join(outputDirectory, $"{applicationComponent.PipelineName}.yml");
             Console.WriteLine($"Generating pipeline '{applicationComponent.PipelineName}'; source path: {applicationComponent.Directory}, target path: {pipelineYmlFile}");
-            File.WriteAllText(pipelineYmlFile, this.GeneratePipelineYml(applicationComponent.Directory));
+            File.WriteAllText(pipelineYmlFile, GeneratePipelineYml(applicationComponent));
         }
     }
     
     
-    private string GeneratePipelineYml(string componentDirectory)
+    private string GeneratePipelineYml(ApplicationComponent applicationComponent)
     {
-        var pipelineRoot = CreatePipeline(componentDirectory);
+        var pipelineRoot = CreatePipeline(applicationComponent);
         var serializer = new SerializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
             .DisableAliases()
@@ -28,7 +28,7 @@ public class PipelinesGenerator
         return serializer.Serialize(pipelineRoot);
     }
 
-    private PipelineRoot CreatePipeline(string componentDirectory)
+    private PipelineRoot CreatePipeline(ApplicationComponent applicationComponent)
     {
         return new PipelineRoot(
             new PipelineTrigger(
@@ -36,60 +36,14 @@ public class PipelinesGenerator
                     new List<string> { "main" }
                 ),
                 new PipelineTriggerPaths(
-                    new List<string> { $"/{componentDirectory}/**" }
+                    new List<string> { $"/{applicationComponent.Directory}/**" }
                 )
             ),
             new List<PipelineResources>
             {
-                new PipelineResources("self")
+                new("self")
             },
-            new List<PipelineStage>
-            {
-                BuildStages.Build(),
-                BuildStages.Release()
-            }
+            applicationComponent.Definition.ToPipelineStages()
         );
     }
-    /*
-     * trigger:
-         branches:
-           include:
-             - main
-         paths:
-           include:
-             - '/Pipelines/**'
-       resources:
-         - repo: self
-     */
-    /*
-     * 
-       
-        var person = new Person
-       {
-           Name = "Abe Lincoln",
-           Age = 25,
-           HeightInInches = 6f + 4f / 12f,
-           Addresses = new Dictionary<string, Address>{
-               { "home", new  Address() {
-                       Street = "2720  Sundown Lane",
-                       City = "Kentucketsville",
-                       State = "Calousiyorkida",
-                       Zip = "99978",
-                   }},
-               { "work", new  Address() {
-                       Street = "1600 Pennsylvania Avenue NW",
-                       City = "Washington",
-                       State = "District of Columbia",
-                       Zip = "20500",
-                   }},
-           }
-       };
-       
-       var serializer = new SerializerBuilder()
-           .WithNamingConvention(CamelCaseNamingConvention.Instance)
-           .Build();
-       var yaml = serializer.Serialize(person);
-       System.Console.WriteLine(yaml);
-     */
-    
 }

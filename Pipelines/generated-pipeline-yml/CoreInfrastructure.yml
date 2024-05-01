@@ -38,12 +38,12 @@ stages:
 
           echo "This project has no release artifacts; no-op."
           ls -l
-- stage: CellDeployStage
-  displayName: Deploy to Cells (Wave 1)
+- stage: CellDeployWave1
+  displayName: Deploy (Wave 1)
   dependsOn: ReleaseStage
   jobs:
-  - job: CellDeployCell1
-    displayName: Cell 1 Deploy
+  - job: CellDeployalpha
+    displayName: alpha
     pool:
       vmImage: ubuntu-latest
     steps:
@@ -51,5 +51,57 @@ stages:
       inputs:
         script: |2
 
-          echo "Here we would run commands to deploy infrastructure via CDK for TerraForm."
+          echo "(alpha) Here we would run commands to deploy infrastructure via CDK for TerraForm."
+          ls -l
+- stage: CellDeployWave2
+  displayName: Deploy (Wave 2)
+  dependsOn: ReleaseStage
+  jobs:
+  - job: CellDeploywestus3-1
+    displayName: westus3-1
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: CmdLine@2
+      inputs:
+        script: |2
+
+          echo "(westus3-1) Here we would run commands to deploy infrastructure via CDK for TerraForm."
+          ls -l
+  - job: CellDeploysouthcentralus-1
+    displayName: southcentralus-1
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: CmdLine@2
+      inputs:
+        script: |2
+
+          echo "(southcentralus-1) Here we would run commands to deploy infrastructure via CDK for TerraForm."
+          ls -l
+- stage: CellDeployWave3
+  displayName: Deploy (Wave 3)
+  dependsOn: ReleaseStage
+  jobs:
+  - job: CellDeploywestus2-1
+    displayName: westus2-1
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: CmdLine@2
+      inputs:
+        script: |2
+
+          echo "(westus2-1) Here we would run commands to deploy infrastructure via CDK for TerraForm."
+          ls -l
+  - job: CellDeployeastus1-1
+    displayName: eastus1-1
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: CmdLine@2
+      inputs:
+        script: |2
+
+          echo "(eastus1-1) Here we would run commands to deploy infrastructure via CDK for TerraForm."
           ls -l

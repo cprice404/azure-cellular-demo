@@ -1,3 +1,5 @@
+using CellRegistry;
+
 namespace PipelinesGenerator;
 
 public record struct ApplicationComponent(
@@ -107,12 +109,12 @@ ls -l
     {
         public class CdkTfDeployStep : PipelineCellDeployStep
         {
-            public override List<PipelineStep> ToPipelineSteps()
+            public override List<PipelineStep> ToPipelineSteps(Cell cell)
             {
                 return new List<PipelineStep>
                 {
-                    new PipelineStep.CmdLine2(@"
-echo ""Here we would run commands to deploy infrastructure via CDK for TerraForm.""
+                    new PipelineStep.CmdLine2($@"
+echo ""({cell.CellName}) Here we would run commands to deploy infrastructure via CDK for TerraForm.""
 ls -l
 ")
                 };
@@ -128,12 +130,12 @@ ls -l
 
             public string ManifestPath { get; set; }
             
-            public override List<PipelineStep> ToPipelineSteps()
+            public override List<PipelineStep> ToPipelineSteps(Cell cell)
             {
                 return new List<PipelineStep>
                 {
                     new PipelineStep.CmdLine2($@"
-echo ""Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f {ManifestPath}`.""
+echo ""({cell.CellName}) Here we would run commands to apply a k8s manifest, e.g. `kubectl apply -f {ManifestPath}`.""
 ls -l
 ")
                 };
@@ -150,12 +152,12 @@ ls -l
 
             public string ShellCommand { get; set; }
             
-            public override List<PipelineStep> ToPipelineSteps()
+            public override List<PipelineStep> ToPipelineSteps(Cell cell)
             {
                 return new List<PipelineStep>
                 {
                     new PipelineStep.CmdLine2($@"
-echo ""Here we would run arbitrary shell commands passed to the constructor, e.g. `{ShellCommand}`.""
+echo ""({cell.CellName}) Here we would run arbitrary shell commands passed to the constructor, e.g. `{ShellCommand}`.""
 ls -l
 ")
                 };
@@ -164,7 +166,7 @@ ls -l
         
         private PipelineCellDeployStep() { }
 
-        public abstract List<PipelineStep> ToPipelineSteps();
+        public abstract List<PipelineStep> ToPipelineSteps(Cell cell);
     }
 
     public record struct PipelineDefinition(
@@ -180,29 +182,28 @@ ls -l
             stages.Add(BuildStage.ToPipelineStage("BuildStage", "Build", null));
             stages.Add(ReleaseStage.ToPipelineStage("ReleaseStage", "Release", "BuildStage"));
             string prevStageName = "ReleaseStage";
-            // int nextCellDeployStageIndex = 0;
-            
-                // nextCellDeployStageIndex++;
-                // var stageName = $"CellDeployStage{nextCellDeployStageIndex}";
-                // stages.Add(cellDeploySteps.ToPipelineStage(stageName, prevStageName));
-                // prevStageName = stageName;
-            // }
-            var cellDeployStage = new PipelineStage(
-                "CellDeployStage",
-                "Deploy to Cells (Wave 1)",
-                prevStageName,
-                new List<PipelineJob>
-                {
-                    new(
-                        "CellDeployCell1",
-                        "Cell 1 Deploy",
-                        new PipelineJobPool("ubuntu-latest"),
-                        CellDeploySteps.SelectMany(s => s.ToPipelineSteps()).ToList()
-                    )
-                }
-            );
-            stages.Add(cellDeployStage);
-            
+            int nextWaveIndex = 0;
+            foreach (var cellDeployWave in CellWaves.AllWaves())
+            {
+                nextWaveIndex++;
+                var stageName = $"CellDeployWave{nextWaveIndex}";
+                var cellDeploySteps = CellDeploySteps;
+                List<PipelineJob> cellJobs = cellDeployWave.Cells.Select(c => new PipelineJob(
+                    $"CellDeploy{c.CellName}",
+                    c.CellName,
+                    new PipelineJobPool("ubuntu-latest"),
+                    cellDeploySteps.SelectMany(s => s.ToPipelineSteps(c)).ToList()
+                )).ToList();
+
+                var cellDeployStage = new PipelineStage(
+                    stageName,
+                    $"Deploy (Wave {nextWaveIndex})",
+                    prevStageName,
+                    cellJobs
+                );
+                stages.Add(cellDeployStage);
+            }
+
             return stages;
         }
     }

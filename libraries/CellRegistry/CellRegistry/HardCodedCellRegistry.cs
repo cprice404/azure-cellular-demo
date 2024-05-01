@@ -21,12 +21,76 @@ internal class HardCodedCellRegistry : ICellRegistry
             ),
             Location: "westus2"
         ));
+        cells.Add("fake-alpha-subscription-id", new Cell(
+            SubscriptionId: "fake-alpha-subscription-id",
+            CellName: "alpha",
+            CellType: CellType.PREPROD,
+            BackendStorageContainer: new AzureBackendStorageContainer(
+                ResourceGroupName: "cdktf-state",
+                StorageAccountName: "cdktfstate90210",
+                ContainerName: "cdktf-state"
+            ),
+            Location: "westus2"
+        ));
+        
+        cells.Add("fake-westus2-1-subscription-id", new Cell(
+            SubscriptionId: "fake-westus2-1-subscription-id",
+            CellName: "westus2-1",
+            CellType: CellType.PROD,
+            BackendStorageContainer: new AzureBackendStorageContainer(
+                ResourceGroupName: "cdktf-state",
+                StorageAccountName: "cdktfstate90211",
+                ContainerName: "cdktf-state"
+            ),
+            Location: "westus2"
+        ));
+        
+        cells.Add("fake-eastus1-1-subscription-id", new Cell(
+            SubscriptionId: "fake-eastus1-1-subscription-id",
+            CellName: "eastus1-1",
+            CellType: CellType.PROD,
+            BackendStorageContainer: new AzureBackendStorageContainer(
+                ResourceGroupName: "cdktf-state",
+                StorageAccountName: "cdktfstate90212",
+                ContainerName: "cdktf-state"
+            ),
+            Location: "eastus1"
+        ));
+        
+        cells.Add("fake-southcentralus-1-subscription-id", new Cell(
+            SubscriptionId: "fake-southcentralus-1-subscription-id",
+            CellName: "southcentralus-1",
+            CellType: CellType.PROD,
+            BackendStorageContainer: new AzureBackendStorageContainer(
+                ResourceGroupName: "cdktf-state",
+                StorageAccountName: "cdktfstate90213",
+                ContainerName: "cdktf-state"
+            ),
+            Location: "southcentralus"
+        ));
+        
+        cells.Add("fake-westus3-1-subscription-id", new Cell(
+            SubscriptionId: "fake-westus3-1-subscription-id",
+            CellName: "westus3-1",
+            CellType: CellType.PROD,
+            BackendStorageContainer: new AzureBackendStorageContainer(
+                ResourceGroupName: "cdktf-state",
+                StorageAccountName: "cdktfstate90214",
+                ContainerName: "cdktf-state"
+            ),
+            Location: "westus3"
+        ));
     }
 
 
     public Cell GetCellBySubscriptionId(string subscriptionId)
     {
         return cells[subscriptionId];
+    }
+    
+    public Cell GetCellByName(string cellName)
+    {
+        return cells.Values.First(cell => cell.CellName == cellName);
     }
 
     public Cell GetCellForCurrentSubscription()

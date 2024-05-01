@@ -202,6 +202,7 @@ ls -l
                     cellJobs
                 );
                 stages.Add(cellDeployStage);
+                prevStageName = stageName;
             }
 
             return stages;

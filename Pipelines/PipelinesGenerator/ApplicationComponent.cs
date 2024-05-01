@@ -240,7 +240,7 @@ ls -l
                 );
                 stages.Add(cellDeployStage);
                 var bakeStageName = $"BakeWave{nextWaveIndex}";
-                stages.Add(ApplicationComponents.Pipeline.Bake.MonitorAlerts().ToPipelineStage(bakeStageName, $"Bake (Wave {nextWaveIndex})", prevStageName, cellDeployWave));
+                stages.Add(ApplicationComponents.Pipeline.Bake.MonitorAlerts().ToPipelineStage(bakeStageName, $"Bake (Wave {nextWaveIndex})", stageName, cellDeployWave));
                 prevStageName = bakeStageName;
             }
 

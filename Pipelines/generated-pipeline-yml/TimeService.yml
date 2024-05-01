@@ -72,7 +72,7 @@ stages:
       displayName: Store AppConfig
 - stage: BakeWave1
   displayName: Bake (Wave 1)
-  dependsOn: ReleaseStage
+  dependsOn: CellDeployWave1
   jobs:
   - job: BakeWave1
     displayName: Bake (Wave 1)
@@ -144,7 +144,7 @@ stages:
       displayName: Store AppConfig
 - stage: BakeWave2
   displayName: Bake (Wave 2)
-  dependsOn: BakeWave1
+  dependsOn: CellDeployWave2
   jobs:
   - job: BakeWave2
     displayName: Bake (Wave 2)
@@ -216,7 +216,7 @@ stages:
       displayName: Store AppConfig
 - stage: BakeWave3
   displayName: Bake (Wave 3)
-  dependsOn: BakeWave2
+  dependsOn: CellDeployWave3
   jobs:
   - job: BakeWave3
     displayName: Bake (Wave 3)

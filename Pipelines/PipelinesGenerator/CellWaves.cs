@@ -21,15 +21,15 @@ public record CellWaves
             new(
                 new List<Cell>()
                 {
-                    cellRegistry.GetCellByName("westus3-1"),
-                    cellRegistry.GetCellByName("southcentralus-1")
+                    cellRegistry.GetCellByName("westus3_1"),
+                    cellRegistry.GetCellByName("southcentralus_1")
                 }
             ),
             new(
                 new List<Cell>()
                 {
-                    cellRegistry.GetCellByName("westus2-1"),
-                    cellRegistry.GetCellByName("eastus1-1")
+                    cellRegistry.GetCellByName("westus2_1"),
+                    cellRegistry.GetCellByName("eastus1_1")
                 }
             )
         };

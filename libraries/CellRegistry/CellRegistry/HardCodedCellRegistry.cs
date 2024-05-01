@@ -35,7 +35,7 @@ internal class HardCodedCellRegistry : ICellRegistry
         
         cells.Add("fake-westus2-1-subscription-id", new Cell(
             SubscriptionId: "fake-westus2-1-subscription-id",
-            CellName: "westus2-1",
+            CellName: "westus2_1",
             CellType: CellType.PROD,
             BackendStorageContainer: new AzureBackendStorageContainer(
                 ResourceGroupName: "cdktf-state",
@@ -47,7 +47,7 @@ internal class HardCodedCellRegistry : ICellRegistry
         
         cells.Add("fake-eastus1-1-subscription-id", new Cell(
             SubscriptionId: "fake-eastus1-1-subscription-id",
-            CellName: "eastus1-1",
+            CellName: "eastus1_1",
             CellType: CellType.PROD,
             BackendStorageContainer: new AzureBackendStorageContainer(
                 ResourceGroupName: "cdktf-state",
@@ -59,7 +59,7 @@ internal class HardCodedCellRegistry : ICellRegistry
         
         cells.Add("fake-southcentralus-1-subscription-id", new Cell(
             SubscriptionId: "fake-southcentralus-1-subscription-id",
-            CellName: "southcentralus-1",
+            CellName: "southcentralus_1",
             CellType: CellType.PROD,
             BackendStorageContainer: new AzureBackendStorageContainer(
                 ResourceGroupName: "cdktf-state",
@@ -71,7 +71,7 @@ internal class HardCodedCellRegistry : ICellRegistry
         
         cells.Add("fake-westus3-1-subscription-id", new Cell(
             SubscriptionId: "fake-westus3-1-subscription-id",
-            CellName: "westus3-1",
+            CellName: "westus3_1",
             CellType: CellType.PROD,
             BackendStorageContainer: new AzureBackendStorageContainer(
                 ResourceGroupName: "cdktf-state",

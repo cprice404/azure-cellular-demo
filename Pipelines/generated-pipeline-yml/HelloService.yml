@@ -57,8 +57,8 @@ stages:
   displayName: Deploy (Wave 2)
   dependsOn: ReleaseStage
   jobs:
-  - job: CellDeploywestus3-1
-    displayName: westus3-1
+  - job: CellDeploywestus3_1
+    displayName: westus3_1
     pool:
       vmImage: ubuntu-latest
     steps:
@@ -66,10 +66,10 @@ stages:
       inputs:
         script: |2
 
-          echo "(westus3-1) Here we would run commands to deploy infrastructure via CDK for TerraForm."
+          echo "(westus3_1) Here we would run commands to deploy infrastructure via CDK for TerraForm."
           ls -l
-  - job: CellDeploysouthcentralus-1
-    displayName: southcentralus-1
+  - job: CellDeploysouthcentralus_1
+    displayName: southcentralus_1
     pool:
       vmImage: ubuntu-latest
     steps:
@@ -77,14 +77,14 @@ stages:
       inputs:
         script: |2
 
-          echo "(southcentralus-1) Here we would run commands to deploy infrastructure via CDK for TerraForm."
+          echo "(southcentralus_1) Here we would run commands to deploy infrastructure via CDK for TerraForm."
           ls -l
 - stage: CellDeployWave3
   displayName: Deploy (Wave 3)
   dependsOn: ReleaseStage
   jobs:
-  - job: CellDeploywestus2-1
-    displayName: westus2-1
+  - job: CellDeploywestus2_1
+    displayName: westus2_1
     pool:
       vmImage: ubuntu-latest
     steps:
@@ -92,10 +92,10 @@ stages:
       inputs:
         script: |2
 
-          echo "(westus2-1) Here we would run commands to deploy infrastructure via CDK for TerraForm."
+          echo "(westus2_1) Here we would run commands to deploy infrastructure via CDK for TerraForm."
           ls -l
-  - job: CellDeployeastus1-1
-    displayName: eastus1-1
+  - job: CellDeployeastus1_1
+    displayName: eastus1_1
     pool:
       vmImage: ubuntu-latest
     steps:
@@ -103,5 +103,5 @@ stages:
       inputs:
         script: |2
 
-          echo "(eastus1-1) Here we would run commands to deploy infrastructure via CDK for TerraForm."
+          echo "(eastus1_1) Here we would run commands to deploy infrastructure via CDK for TerraForm."
           ls -l

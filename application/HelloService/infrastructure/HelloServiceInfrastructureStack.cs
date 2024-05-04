@@ -54,7 +54,7 @@ namespace HelloServiceInfrastructure
 
             var appConfig = new DataAzurermAppConfiguration(this, "app-config", new DataAzurermAppConfigurationConfig()
             {
-                Name = "azure-cellular-demo-appconfig",
+                Name = $"azure-cellular-demo-appconfig-{options.CellName}",
                 ResourceGroupName = options.CoreInfrastructureResourceGroupName
             });
             
@@ -77,7 +77,7 @@ namespace HelloServiceInfrastructure
                     ContainerRegistryUseManagedIdentity = true,
                     ApplicationStack = new LinuxWebAppSiteConfigApplicationStack()
                     {
-                        DockerRegistryUrl = "https://azurecelldemodeveloperchris.azurecr.io",
+                        DockerRegistryUrl = $"https://azurecelldemo{options.CellName}.azurecr.io",
                         DockerImageName = $"helloservice:v{options.HelloServiceVersion}",
                     },
                 },

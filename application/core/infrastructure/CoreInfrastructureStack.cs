@@ -84,7 +84,7 @@ class CoreInfrastructureStack : TerraformStack
 
         var appConfigStore = new AppConfiguration(this, "azure-cellular-demo-appconfig", new AppConfigurationConfig()
         {
-            Name = "azure-cellular-demo-appconfig",
+            Name = $"azure-cellular-demo-appconfig-{options.CellName}",
             ResourceGroupName = rg.Name,
             Location = options.Location
         });
@@ -114,37 +114,5 @@ class CoreInfrastructureStack : TerraformStack
             },
             DependsOn = (new List<ITerraformDependable>() {appConfigDataOwner}).ToArray()
         });
-        /*
-         * 
-           
-           resource "azurerm_role_assignment" "appconf_dataowner" {
-             scope                = azurerm_app_configuration.appconfiguration.id
-             role_definition_name = "App Configuration Data Owner"
-             principal_id         = var.SP_OBJECT_ID
-           }
-           
-           resource "azurerm_app_configuration_key" "settings" {
-             configuration_store_id = azurerm_app_configuration.appconfiguration.id
-             key                    = "Compensation:Settings"
-           
-             depends_on = [
-               azurerm_role_assignment.appconf_dataowner
-             ]
-           }
-         */
-
-        /*
-         *
-           resource "azurerm_app_configuration_key" "test" {
-             configuration_store_id = azurerm_app_configuration.appconf.id
-             key                    = "appConfKey1"
-             label                  = "somelabel"
-             value                  = "a test"
-
-             depends_on = [
-               azurerm_role_assignment.appconf_dataowner
-             ]
-           }
-         */
     }
 }

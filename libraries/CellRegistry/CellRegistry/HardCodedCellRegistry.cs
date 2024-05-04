@@ -21,6 +21,18 @@ internal class HardCodedCellRegistry : ICellRegistry
             ),
             Location: "westus2"
         ));
+        cells.Add("5cf20061-1947-49d1-915b-4c0345485985", new Cell(
+            SubscriptionId: "5cf20061-1947-49d1-915b-4c0345485985",
+            CellName: "staging",
+            CellType: CellType.DEVELOPER,
+            BackendStorageContainer: new AzureBackendStorageContainer(
+                ResourceGroupName: "cdktf-state",
+                StorageAccountName: "cdktfstate90210",
+                ContainerName: "cdktfstate"
+            ),
+            Location: "westus2"
+        ));
+        
         cells.Add("fake-alpha-subscription-id", new Cell(
             SubscriptionId: "fake-alpha-subscription-id",
             CellName: "alpha",

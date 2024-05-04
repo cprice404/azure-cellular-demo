@@ -6,6 +6,11 @@ set -x
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export KUBECONFIG=${SCRIPT_DIR}/../../Core/infrastructure/azurek8s_kube_config
 
+if [ -z "CELL_NAME" ]; then
+    echo "Error: CELL_NAME is not set."
+    exit 1
+fi
+
 TIME_SERVICE_IP=$(kubectl get services timeservice -o json | jq -r '.status.loadBalancer.ingress[0].ip')
 # Loop until we get an ip from k8s
 while [ "$TIME_SERVICE_IP" == "null" ]; do
@@ -15,5 +20,5 @@ while [ "$TIME_SERVICE_IP" == "null" ]; do
 done
 
 echo "Time service ip is: ${TIME_SERVICE_IP}"
-az appconfig kv set --name azure-cellular-demo-appconfig --key timeservice_address --value $TIME_SERVICE_IP --yes
+az appconfig kv set --name azure-cellular-demo-appconfig-${CELL_NAME} --key timeservice_address --value $TIME_SERVICE_IP --yes
 

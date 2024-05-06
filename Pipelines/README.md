@@ -5,16 +5,16 @@ application components to all the cells defined in our Cell Registry. It also co
 iterates over all of the target cells and all of the application components, and keeps the individual application
 component pipelines up to date.
 
-Whenever you want to add or remove cells, you can update the Cell Registry and the [CellWaves.cs](./PipelinesGenerator/CellWaves.cs)
+Whenever you want to add or remove cells, you can update the Cell Registry and the [CellWaves.cs](https://github.com/cprice404/azure-cellular-demo/tree/main/application/Pipelines/PipelinesGenerator/CellWaves.cs)
 file, then commit your changes, and the PipelineOfPipelines will update all of the other pipelines accordingly.
 
 Whenever you want to add or remove application components, or change the definition of the build/deploy steps that should
-be taken for a given pipeline component, you can update the [ApplicationComponents.cs](./PipelinesGenerator/ApplicationComponents.cs)
+be taken for a given pipeline component, you can update the [ApplicationComponents.cs](https://github.com/cprice404/azure-cellular-demo/tree/main/application/Pipelines/PipelinesGenerator/ApplicationComponents.cs)
 file, then commit your changes, and the PipelineOfPipelines will update the pipelines accordingly.
 
 NOTE: in this example code, the deployment stages (such as `BuildAndPushAcrImageStage`) are just wired up to use a
 `CmdLine@2` azure pipeline task, and echo an informative message about what they would be doing. To actually deploy
-the application components, you would modify the stage definitions in [ApplicationComponent.cs](./PipelinesGenerator/ApplicationComponent.cs)
+the application components, you would modify the stage definitions in [ApplicationComponent.cs](https://github.com/cprice404/azure-cellular-demo/tree/main/application/Pipelines/PipelinesGenerator/ApplicationComponent.cs)
 to either add the real CLI commands, or to wire them up to other [Azure Pipeline tasks](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/?view=azure-pipelines&viewFallbackFrom=azure-devops).
 You can also add any other stages that you like!
 
@@ -101,8 +101,14 @@ definition (YAML). Click on the Run button to run the PipelineOfPipelines for th
 
 If you get an error message saying that "No hosted parallelism has been purchased or granted", you will need to
 either follow the link in the message to request access to the free tier (may take a few days), or you can
-increase the "paid parallel jobs" setting under "Organization"->"Billing". (It may take several minutes for the
+increase the "paid parallel jobs" setting under "Organization"->"Billing". (It may take 30 minutes or more for the
 paid parallel jobs to become available after you've changed the billing setting.)
+
+# Trigger the pipelines
+
+Each pipeline is now configured to trigger on a push to the `main` branch, if any files in the corresponding directory
+have been modified. For example, try modifying the README in the `application/TimeService` directory and commiting;
+you should see the `TimeService` pipeline trigger and run.
 
 # Modify the pipeline
 

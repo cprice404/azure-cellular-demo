@@ -45,7 +45,7 @@ To try out the cell bootstrap script you will need to do the following:
 * Make sure the correct subscription shows up when you run `az account show`.
 * Make sure the `Microsoft.Storage` resource provider is registered for the subscription.
 * Create an Azure storage account and container to use for the Terraform state. ([Example](https://learn.microsoft.com/en-us/azure/developer/terraform/store-state-in-azure-storage?tabs=azure-cli#2-configure-remote-state-storage-account))
-* Edit the hard-coded cell registry in `./libraries/CellRegistry/CellRegistry/HardCodedCellRegistry.cs` to add an item
+* Edit the hard-coded cell registry in [`./libraries/CellRegistry/CellRegistry/HardCodedCellRegistry.cs`](https://github.com/cprice404/azure-cellular-demo/tree/main/libraries/CellRegistry/CellRegistry/HardCodedCellRegistry.cs) to add an item
   for your new cell. You'll need to add:
   * Your subscription id
   * A cell name (anything you like, but all lowercase and no special chars)
@@ -66,5 +66,5 @@ And feel free to reach out to me and let me know so that I can update the instru
 # What next?
 
 The cell-bootstrap script allows you to manually bootstrap a single cell, but the more interesting part of this demo is
-the pipeline automation. Check out the `./Pipeline` directory for a working example of how to set up Azure Devops pipelines
+the pipeline automation. Check out the [`./Pipelines`](https://github.com/cprice404/azure-cellular-demo/tree/main/Pipelines) directory for a working example of how to set up Azure Devops pipelines
 for each of the application components, so that they can be deployed to multiple cells whenever changes are committed.

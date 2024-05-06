@@ -116,14 +116,14 @@ you should see the `TimeService` pipeline trigger and run.
 
 # Modify the Application Component Pipelines
 
-When the application component pipelines run, they simulate deploying to all the cells [defined in the cell waves](https://github.com/cprice404/azure-cellular-demo/blob/83061d51ac44e8d8f5e00b6e7b65cf1656bf7926/Pipelines/PipelinesGenerator/CellWaves.cs#L13-L35).
+When the application component pipelines run, they simulate deploying to all the cells [defined in the cell waves](https://github.com/cprice404/azure-cellular-demo/blob/main/Pipelines/PipelinesGenerator/CellWaves.cs).
 
 ![Cell waves](./hello-pipeline-deploying.png)
 
 Try removing some cells from a wave, or removing a wave entirely, and commiting the change. When PipelineOfPipelines runs
 you should see it update the application component pipelines accordingly.
 
-You can also try modifying the ApplicationComponent pipeline definitions defined in [ApplicationComponents.cs](dhttps://github.com/cprice404/azure-cellular-demo/blob/83061d51ac44e8d8f5e00b6e7b65cf1656bf7926/Pipelines/PipelinesGenerator/ApplicationComponents.cs#L53-L62).
+You can also try modifying the ApplicationComponent pipeline definitions defined in [ApplicationComponents.cs](https://github.com/cprice404/azure-cellular-demo/blob/main/Pipelines/PipelinesGenerator/ApplicationComponents.cs).
 This will allow you to add or remove steps for deployment for a specific application component.
 
 # Note on CDK for Terraform and Azure Devops provider

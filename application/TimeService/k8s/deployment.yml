@@ -1,0 +1,21 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: timeservice-deployment
+  labels:
+    app: timeservice-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: timeservice
+  template:
+    metadata:
+      labels:
+        app: timeservice
+    spec:
+      containers:
+        - name: timeservice
+          image: azurecelldemo${CELL_NAME}.azurecr.io/timeservice:v${TIMESERVICE_VERSION}
+          ports:
+          - containerPort: 8080

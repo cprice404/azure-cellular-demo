@@ -23,7 +23,14 @@ test:
 
 .PHONY: cell-bootstrap
 cell-bootstrap:
-	./scripts/cell-bootstrap.sh
+	dotnet build
+	./build-and-push-docker-image.sh
+	./cdktf-deploy.sh
+
+pipeline-build:
+	npm run build
+
+
 
 .PHONY: cell-teardown
 cell-teardown:

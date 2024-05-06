@@ -3,6 +3,5 @@
   "CdkTfBackendAzureStorageAccountName": "<insert the name of the Azure Storage account to use for storing terraform state here>",
   "CdkTfBackendAzureStorageContainerName": "<insert the name of the Azure Storage container to use for storing terraform state here>",
   "AzureDevopsOrganizationUrl": "https://dev.azure.com/<insert your Azure Devops org name here>"
-  "AzureDevopsPersonalAccessToken": "<insert your Azure Devops personal access token here>",
   "GithubPersonalAccessToken": "<insert your GitHub personal access token here>"
 }

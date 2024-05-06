@@ -1,8 +1,0 @@
-.gen
-bin/
-cdktf.out/
-obj/
-node_modules/
-appsettings.json
-terraform.cdktf-azure-devops-experiment.tfstate
-terraform.cdktf-azure-devops-experiment.tfstate.backup

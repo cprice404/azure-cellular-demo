@@ -61,14 +61,15 @@ public class ApplicationComponents
                 Pipeline.CellDeploy.ShellCmd("Store AppConfig", "application/TimeService/scripts/store-loadbalancer-address-to-appconfig.sh"),
             }
         }),
-        new ApplicationComponent("HelloService", "application/HelloService", new ApplicationComponent.PipelineDefinition
-        {
-            BuildStage = Pipeline.Build.Make(),
-            ReleaseStage = Pipeline.Release.BuildAndPushAcrImage(),
-            CellDeploySteps = new[]
+        new ApplicationComponent("HelloService", "application/HelloService",
+            new ApplicationComponent.PipelineDefinition
             {
-                Pipeline.CellDeploy.CdkTfDeploy()
-            }
-        }),
+                BuildStage = Pipeline.Build.Make(),
+                ReleaseStage = Pipeline.Release.BuildAndPushAcrImage(),
+                CellDeploySteps = new[]
+                {
+                    Pipeline.CellDeploy.CdkTfDeploy()
+                }
+            }),
     };
 }

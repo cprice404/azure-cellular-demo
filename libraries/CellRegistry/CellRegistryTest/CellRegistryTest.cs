@@ -26,11 +26,4 @@ public class CellRegistryTest
             )
         );
     }
-
-    // [Fact]
-    // public void GetCellForCurrentSubscription()
-    // {
-    //     var currentCell = CellRegistry.Default().GetCellForCurrentSubscription();
-    //     _testOutputHelper.WriteLine($"Cell for current subscription: {currentCell.cellName}");
-    // }
 }

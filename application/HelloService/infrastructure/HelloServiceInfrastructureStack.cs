@@ -39,15 +39,8 @@ namespace HelloServiceInfrastructure
             
             var asp = new ServicePlan(this, "helloservice-asp", new ServicePlanConfig() {
                 Name = "helloservice-asp",
-                // Kind = "Linux",
-                // Reserved = true,
                 ResourceGroupName = rg.Name,
                 Location = options.Location,
-                // Sku = new AppServicePlanSku()
-                // {
-                //     Tier = "Free",
-                //     Size = "B1"
-                // }
                 OsType = "Linux",
                 SkuName = "B1",
             });

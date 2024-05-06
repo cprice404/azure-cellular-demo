@@ -107,15 +107,6 @@ internal class HardCodedCellRegistry : ICellRegistry
 
     public Cell GetCellForCurrentSubscription()
     {
-        // var credential = new DefaultAzureCredential();
-        // ArmClient client = new ArmClient(credential);
-        // SubscriptionResource subscription = client.GetDefaultSubscription();
-        // Console.WriteLine($"Default Subscription ID: {subscription.Data.SubscriptionId}");
-        //
-        // var subscriptions = client.GetSubscriptions();
-        // Console.WriteLine($"All subscriptions: {string.Join(", ", subscriptions.Select(s => s.Data.SubscriptionId))}");
-        //
-        // throw new NotImplementedException();
         string defaultSubscriptionId = GetDefaultAzureSubscriptionId();
         return cells[defaultSubscriptionId];
     }

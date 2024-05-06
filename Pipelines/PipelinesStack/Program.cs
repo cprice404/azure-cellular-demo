@@ -22,7 +22,6 @@ namespace MyCompany.MyApp
             String cdkTfBackendAzureStorageAccountName = getConfig(config, "CdkTfBackendAzureStorageAccountName");
             String cdkTfBackendAzureStorageContainerName = getConfig(config, "CdkTfBackendAzureStorageContainerName");
             String azureDevopsOrganizationUrl = getConfig(config, "AzureDevopsOrganizationUrl");
-            String azurePersonalAccessToken = getConfig(config, "AzureDevopsPersonalAccessToken");
             String githubPersonalAccessToken = getConfig(config, "GithubPersonalAccessToken");
             
             
@@ -32,7 +31,6 @@ namespace MyCompany.MyApp
                 CdkTfBackendAzureStorageAccountName: cdkTfBackendAzureStorageAccountName,
                 CdkTfBackendAzureStorageContainerName: cdkTfBackendAzureStorageContainerName,
                 AzureDevopsOrganizationUrl: azureDevopsOrganizationUrl,
-                AzureDevopsPersonalAccessToken: azurePersonalAccessToken,
                 GithubPersonalAccessToken: githubPersonalAccessToken
             ));
             app.Synth();

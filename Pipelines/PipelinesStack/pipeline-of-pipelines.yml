@@ -9,9 +9,7 @@ resources:
   - repo: self
 
 variables:
-  # TODO: combine and simplify these variable groups
-  - group: github-and-azure-access-tokens
-  - group: service-principal-info
+  - group: pipeline-config
   - name: vmImageName
     value: 'ubuntu-latest'
 
@@ -76,13 +74,11 @@ stages:
             inputs:
               script: |
                 cd Pipelines/PipelinesStack
-                # TODO: simplify this
                 echo '{
                   "CdkTfBackendAzureResourceGroupName": "$(CdkTfBackendAzureResourceGroupName)",
                   "CdkTfBackendAzureStorageAccountName": "$(CdkTfBackendAzureStorageAccountName)",
                   "CdkTfBackendAzureStorageContainerName": "$(CdkTfBackendAzureStorageContainerName)",
                   "AzureDevopsOrganizationUrl": "$(AzureDevopsOrganizationUrl)",
-                  "AzureDevopsPersonalAccessToken": "$(AzureDevopsPersonalAccessToken)",
                   "GithubPersonalAccessToken": "$(GithubPersonalAccessToken)"
                 }' > appsettings.json
                 
@@ -96,11 +92,10 @@ stages:
                 npm run deploy -- --auto-approve
             
             env:
-              ARM_CLIENT_ID: $(appId)
-              ARM_CLIENT_SECRET: $(password)
-              ARM_TENANT_ID: $(tenant)
-              # TODO: make this dynamic/variable
-              ARM_SUBSCRIPTION_ID: "c6b57d84-a545-465b-bf2f-037b6f4480a9"
+              ARM_CLIENT_ID: $(PipelineServicePrincipalAppId)
+              ARM_CLIENT_SECRET: $(PipelineServicePrincipalPassword)
+              ARM_TENANT_ID: $(PipelineServicePrincipalTenant)
+              ARM_SUBSCRIPTION_ID: $(PipelineSubscriptionId)
 
         
                 

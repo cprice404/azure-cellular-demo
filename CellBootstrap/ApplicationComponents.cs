@@ -10,6 +10,7 @@ public class ApplicationComponents
     {
         return new List<ApplicationComponent>()
         {
+            // This controls the order in which the components are deployed. The order is reversed for teardown.
             new ApplicationComponent("application/Core"),
             new ApplicationComponent("application/TimeService"),
             new ApplicationComponent("application/HelloService")

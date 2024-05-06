@@ -9,6 +9,8 @@ internal class HardCodedCellRegistry : ICellRegistry
     
     internal HardCodedCellRegistry()
     {
+        // This is a silly hard-coded list. In a real-world scenario, you would likely store this information
+        // in a database or in a file on a blob store so that it could be updated independently of this library.
         var developerChrisSubscriptionId = "7c6aa098-eff7-4553-8f9e-3ce1c045c8c9";
         cells.Add(developerChrisSubscriptionId, new Cell(
             SubscriptionId: developerChrisSubscriptionId,

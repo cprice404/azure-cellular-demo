@@ -1,4 +1,4 @@
-# Azure Cell Architecture Demo: Pipelines
+# Azure Cellular Architecture Demo: Pipelines
 
 This directory contains example code to create an Azure Devops project, with pipelines for deploying each of the
 application components to all the cells defined in our Cell Registry. It also contains a PipelineOfPipelines, which

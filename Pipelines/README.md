@@ -114,27 +114,26 @@ Each pipeline is now configured to trigger on a push to the `main` branch, if an
 have been modified. For example, try modifying the README in the `application/TimeService` directory and commiting;
 you should see the `TimeService` pipeline trigger and run.
 
-# Modify the pipeline
+# Modify the Application Component Pipelines
 
-If you'd
+When the application component pipelines run, they simulate deploying to all the cells [defined in the cell waves](https://github.com/cprice404/azure-cellular-demo/blob/83061d51ac44e8d8f5e00b6e7b65cf1656bf7926/Pipelines/PipelinesGenerator/CellWaves.cs#L13-L35).
+
+![Cell waves](./hello-pipeline-deploying.png)
+
+Try removing some cells from a wave, or removing a wave entirely, and commiting the change. When PipelineOfPipelines runs
+you should see it update the application component pipelines accordingly.
+
+You can also try modifying the ApplicationComponent pipeline definitions defined in [ApplicationComponents.cs](https://github.com/cprice404/azure-cellular-demo/blob/83061d51ac44e8d8f5e00b6e7b65cf1656bf7926/Pipelines/PipelinesGenerator/ApplicationComponents.cs#L53-L62).
+This will allow you to add or remove steps for deployment for a specific application component.
 
 # Note on CDK for Terraform and Azure Devops provider
 
+Some popular Terraform providers, such as the Azure Resource Manager provider, are pre-packaged by Hashicorp. But you can
+use just about any Terraform provider, even if they are not pre-packaged. For example, this project uses the `azuredevops`
+provider, which does not have pre-built CDKTF packages. Therefore, to use it, we need to `add` and `get` the provider;
+e.g. `npx cdktf add azuredevops` and `npx cdktf get`.
 
-
-
-
-
-NOTES:
-* need parallel builds on azure pipelines
-* if doing npm install to get a fixed version of cdktf, need to update csproj to exclude nodemodules
-* need an azure devops PAT
-* need to install azure pipelines github app, and maybe cancel out when it starts trying to connect to a pipeline
-* need to have a github PAT
-* When you want to add a pipeline that needs azure permissions for a new subscription, you need to go to the azure devops console, then go to your project, project settings, "service connections" (under Pipelines tab), and add a service connection. Thankfully if you forget to do this, it will detect it at the time that it is parsing the YAML, and put up an error message on the pipeline screen..
-
-* Need to create a variable group to populate appsettings.json; first run after that, you will have to approve permissions for it in the console
-* Need to create a service principal because terraform won't work using azure CLI login via a user account
-* SUPER IMPORTANT to use the right "directory" when setting stuff up in devops console so you can connect service principals
-* Add the service principal as a user in azure devops org
-* env var AZDO_PERSONAL_ACCESS_TOKEN for local deploy of POP?
+When you run those commands, CDKTF will create a `.gen` directory containing generated code for the provider, in whatever
+programming language your project is configured to use. In this case, we did this in our C# project. However, the generated
+code had a few small quirks that caused compiler warnings. To fix this, we moved the generated code from the `.gen` directory
+into the `vendor` directory, so that we could commit it to source control and track small changes to it as needed.

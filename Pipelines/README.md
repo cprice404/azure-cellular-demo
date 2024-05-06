@@ -75,6 +75,39 @@ When the cdktf deploy command completes, you should have 4 pipelines in your new
 
 ![Pipelines](./new-pipelines.png)
 
+Now we need to create a variable group that the pipelines will use for various configuration and auth. From the Pipelines
+page, click "Library" in the left nav, then click "+ Variable Group" to add a Variable group. Name the variable group
+`pipeline-config`, and add the following variables:
+
+* `AzureDevOpsOrganizationUrl`
+* `CdkTfBackendAzureResourceGroupName`
+* `CdkTfBackendAzureStorageAccountName`
+* `CdkTfBackendAzureStorageContainerName`
+* `GithubPersonalAccessToken`
+* `PipelineServicePrincipalAppId`
+* `PipelineServicePrincipalPassword`
+* `PipelineServicePrincipalTenantId`
+* `PipelineSubscriptionId`
+
+It should look something like this:
+
+![Variable Group](./variable-group.png)
+
+Make sure you click "Save" to save the variable group when you are done.
+
+Finally, we need to authorize the project to access github. Click on the "PipelineOfPipelines" and click on
+"Edit", and you should see a prompt to authorize github. Once you have done that, you should see the pipeline
+definition (YAML). Click on the Run button to run the PipelineOfPipelines for the first time!
+
+If you get an error message saying that "No hosted parallelism has been purchased or granted", you will need to
+either follow the link in the message to request access to the free tier (may take a few days), or you can
+increase the "paid parallel jobs" setting under "Organization"->"Billing". (It may take several minutes for the
+paid parallel jobs to become available after you've changed the billing setting.)
+
+# Modify the pipeline
+
+
+
 # Note on CDK for Terraform and Azure Devops provider
 
 

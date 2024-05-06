@@ -4,8 +4,8 @@ This repo contains example code to demonstrate one way to build automation for c
 application hosted on Azure. It is intended to provide a concrete example of the concepts discussed in my QConSF 2023
 talk and article:
 
-https://www.infoq.com/presentations/cellular-architecture/
-https://www.infoq.com/articles/high-availability-in-the-cloud-with-cellular-architecture/
+* https://www.infoq.com/presentations/cellular-architecture/
+* https://www.infoq.com/articles/high-availability-in-the-cloud-with-cellular-architecture/
 
 ![Deployment template](./deployment-template.png)
 
@@ -20,18 +20,18 @@ and written in C#.
 The example code contains the following key components (click in to any of the subdirectories for more information about
 the specific components):
 
-* `./application` - contains the 3 components that make up the application (though these are probably the least interesting
+* [`./application`](https://github.com/cprice404/azure-cellular-demo/tree/main/application) - contains the 3 components that make up the application (though these are probably the least interesting
   parts of the repo):
-  * `./application/CoreInfrastructure` - a CDKTF stack that contains common infrastructure to be re-used by other applicaion
+  * [`./application/Core`](https://github.com/cprice404/azure-cellular-demo/tree/main/application/Core) - a CDKTF stack that contains common infrastructure to be re-used by other applicaion
     components; e.g. Kubernetes clusters, virtual networks, etc.
-  * `./application/TimeService` - code, k8s manifests, and scripts for deploying the `TimeService` to a Kubernetes cluster
-  * `./application/HelloService` - a CDKTF stack that deploys the `HelloService` to an Azure WebApp
-* `./libraries/CellRegistry` - a C# library that provides a data model defining all the information we need to deploy
+  * [`./application/TimeService`](https://github.com/cprice404/azure-cellular-demo/tree/main/application/TimeService) - code, k8s manifests, and scripts for deploying the `TimeService` to a Kubernetes cluster
+  * [`./application/HelloService`](https://github.com/cprice404/azure-cellular-demo/tree/main/application/HelloService) - a CDKTF stack that deploys the `HelloService` to an Azure WebApp
+* [`./libraries/CellRegistry`](https://github.com/cprice404/azure-cellular-demo/tree/main/libraries/CellRegistry) - a C# library that provides a data model defining all the information we need to deploy
   the application to a cell, and to monitor and operate the cell. Includes a hard-coded list of example cells for the demo.
-* `./CellBootstrap` - a CLI program for quickly bootstrapping a new cell with the application components, or tearing down
+* [`./CellBootstrap`](https://github.com/cprice404/azure-cellular-demo/tree/main/CellBootstrap) - a CLI program for quickly bootstrapping a new cell with the application components, or tearing down
   an existing cell to save costs. This program is intended to be run via the `./cell-bootstrap.sh` or `./cell-teardown.sh`
   scripts in the root directory.
-* `./Pipelines` - contains CDKTF code to create and manage an Azure Devops project for the application. The project includes
+* [`./Pipelines`](https://github.com/cprice404/azure-cellular-demo/tree/main/Pipelines) - contains CDKTF code to create and manage an Azure Devops project for the application. The project includes
   a "Pipeline of Pipelines", which is a special "parent" pipeline that is responsible for creating individual pipelines
   to deploy each application component. When cells or application components are added/removed, the "Pipeline of Pipelines"
   will automatically update all the component pipelines to reflect the changes.

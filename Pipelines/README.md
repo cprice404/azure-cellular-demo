@@ -5,7 +5,7 @@ application components to all the cells defined in our Cell Registry. It also co
 iterates over all of the target cells and all of the application components, and keeps the individual application
 component pipelines up to date.
 
-Whenever you want to add or remove cells, you can update the Cell Registry and the [CellWaves.cs](https://github.com/cprice404/azure-cellular-demo/tree/main/application/Pipelines/PipelinesGenerator/CellWaves.cs)
+Whenever you want to add or remove cells, you can update the Cell Registry and the [CellWaves.cs](https://github.com/cprice404/azure-cellular-demo/blob/main/Pipelines/PipelinesGenerator/CellWaves.cs)
 file, then commit your changes, and the PipelineOfPipelines will update all of the other pipelines accordingly.
 
 Whenever you want to add or remove application components, or change the definition of the build/deploy steps that should
@@ -123,7 +123,7 @@ When the application component pipelines run, they simulate deploying to all the
 Try removing some cells from a wave, or removing a wave entirely, and commiting the change. When PipelineOfPipelines runs
 you should see it update the application component pipelines accordingly.
 
-You can also try modifying the ApplicationComponent pipeline definitions defined in [ApplicationComponents.cs](https://github.com/cprice404/azure-cellular-demo/blob/83061d51ac44e8d8f5e00b6e7b65cf1656bf7926/Pipelines/PipelinesGenerator/ApplicationComponents.cs#L53-L62).
+You can also try modifying the ApplicationComponent pipeline definitions defined in [ApplicationComponents.cs](dhttps://github.com/cprice404/azure-cellular-demo/blob/83061d51ac44e8d8f5e00b6e7b65cf1656bf7926/Pipelines/PipelinesGenerator/ApplicationComponents.cs#L53-L62).
 This will allow you to add or remove steps for deployment for a specific application component.
 
 # Note on CDK for Terraform and Azure Devops provider

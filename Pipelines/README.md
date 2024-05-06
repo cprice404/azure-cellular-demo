@@ -104,6 +104,10 @@ either follow the link in the message to request access to the free tier (may ta
 increase the "paid parallel jobs" setting under "Organization"->"Billing". (It may take 30 minutes or more for the
 paid parallel jobs to become available after you've changed the billing setting.)
 
+When the PipelineOfPipelines runs, it will run `cdktf` to deploy and update the pipelines:
+
+![PipelineOfPipelines](./pipeline-of-pipelines-running.png)
+
 # Trigger the pipelines
 
 Each pipeline is now configured to trigger on a push to the `main` branch, if any files in the corresponding directory
@@ -112,7 +116,7 @@ you should see the `TimeService` pipeline trigger and run.
 
 # Modify the pipeline
 
-
+If you'd
 
 # Note on CDK for Terraform and Azure Devops provider
 
